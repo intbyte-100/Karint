@@ -1,10 +1,9 @@
 #ifndef LITEENGINE_VERTEXBUFFEROBJECT_H
 #define LITEENGINE_VERTEXBUFFEROBJECT_H
 
-#include "BufferObject.h"
-
 namespace lite {
-    class VertexBufferObject: public BufferObject{
+    class VertexBufferObject
+    {
     private:
         unsigned int vbo;
 
@@ -13,9 +12,7 @@ namespace lite {
         int size;
         float *vertices;
         VertexBufferObject(float *vertices, int size);
-        void staticDraw() override;
-        void dynamicDraw() override;
-        void streamDraw() override;
+        void draw(unsigned int type);
         void dispose();
     };
 }

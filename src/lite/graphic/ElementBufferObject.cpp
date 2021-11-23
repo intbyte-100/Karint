@@ -13,11 +13,8 @@ void lite::ElementBufferObject::setIndices(unsigned int size, unsigned int *indi
     this->indices = indices;
 }
 
-void lite::ElementBufferObject::staticDraw()
+void lite::ElementBufferObject::draw(unsigned int type)
 {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-                 sizeof(unsigned int) * indicesCount,
-                 indices,
-                 GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * indicesCount, indices, type);
 }

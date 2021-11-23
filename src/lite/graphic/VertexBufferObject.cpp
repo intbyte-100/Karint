@@ -9,22 +9,14 @@ lite::VertexBufferObject::VertexBufferObject(float *vertices, int size)
     glGenBuffers(1, &vbo);
 }
 
-void lite::VertexBufferObject::staticDraw()  {
+void lite::VertexBufferObject::draw(unsigned int type)
+{
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, size * sizeof(float), vertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, size * sizeof(float), vertices, type);
 }
 
-void lite::VertexBufferObject::dynamicDraw() {
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, size * sizeof(float), vertices, GL_DYNAMIC_DRAW);
-}
-
-void lite::VertexBufferObject::streamDraw() {
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, size * sizeof(float), vertices, GL_STREAM_DRAW);
-}
-
-void lite::VertexBufferObject::dispose() {
+void lite::VertexBufferObject::dispose()
+{
     glDeleteBuffers(1, &vbo);
 }
 

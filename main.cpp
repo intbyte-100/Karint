@@ -30,8 +30,7 @@ class TestApp : public lite::Application
 
     void onCreate() override
     {
-        float vertices[]
-            = {0.5f, 0.5f, 0.0f, 0.5f, -0.5f, 0.0f, -0.5f, -0.5f, 0.0f, -0.5f, 0.5f, 0.0f};
+        float vertices[] = {0.5f, 0.5f, 0.0f, 0.5f, -0.5f, 0.0f, -0.5f, -0.5f, 0.0f, -0.5f, 0.5f, 0.0f};
         unsigned int indices[] = {0, 1, 3, 1, 2, 3};
 
         program = new lite::ShaderProgram(vertex, fragment);
@@ -40,8 +39,9 @@ class TestApp : public lite::Application
         ebo = new lite::ElementBufferObject(6, indices);
 
         vao->use();
-        vbo->staticDraw();
-        ebo->staticDraw();
+        vbo->draw(lite::STATIC_DRAW);
+        ebo->draw(lite::STATIC_DRAW);
+
         lite::vertexAttribute(0, 3, lite::FLOAT, false, 3 * sizeof(float), nullptr);
         lite::enableVertexAttributeArray(0);
     }

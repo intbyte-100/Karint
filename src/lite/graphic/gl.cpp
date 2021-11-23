@@ -18,6 +18,10 @@ const int lite::TRIANGLE = GL_TRIANGLES;
 const int lite::POINT = GL_POINT;
 const int lite::LINE = GL_LINE;
 
+const unsigned int lite::STATIC_DRAW = GL_STATIC_DRAW;
+const unsigned int lite::DYNAMIC_DRAW = GL_DYNAMIC_DRAW;
+const unsigned int lite::STREAM_DRAW = GL_STREAM_DRAW;
+
 void lite::clearScreen(float r, float g, float b, float a, int buffers){
     glClearColor(r,g,b,a);
     glClear(buffers);
