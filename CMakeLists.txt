@@ -2,7 +2,27 @@ cmake_minimum_required(VERSION 2.19)
 project(LiteEngine)
 
 set(CMAKE_CXX_STANDARD 14)
-set(ENGINE_SOURCE src/lite/desktop/Window.cpp src/lite/util/LiteException.h src/lite/graphic/gl.cpp src/lite/desktop/DesktopApplication.cpp src/lite/desktop/lite.cpp src/lite/Application.h src/lite/desktop/DesktopApplication.h src/lite/desktop/lite.h src/lite/desktop/Window.h src/lite/graphic/gl.h src/lite/graphic/VertexBufferObject.cpp src/lite/graphic/VertexBufferObject.h src/lite/graphic/ShaderProgram.cpp src/lite/graphic/ShaderProgram.h src/lite/graphic/VertexAttributeObject.cpp src/lite/graphic/VertexAttributeObject.h src/lite/graphic/BufferObject.h)
+
+set(ENGINE_SOURCE
+    src/lite/desktop/Window.cpp
+    src/lite/util/LiteException.h
+    src/lite/graphic/gl.cpp
+    src/lite/desktop/DesktopApplication.cpp
+    src/lite/desktop/lite.cpp src/lite/Application.h
+    src/lite/desktop/DesktopApplication.h
+    src/lite/desktop/lite.h src/lite/desktop/Window.h
+    src/lite/graphic/gl.h
+    src/lite/graphic/VertexBufferObject.cpp
+    src/lite/graphic/VertexBufferObject.h
+    src/lite/graphic/ShaderProgram.cpp
+    src/lite/graphic/ShaderProgram.h
+    src/lite/graphic/VertexAttributeObject.cpp
+    src/lite/graphic/VertexAttributeObject.h
+    src/lite/graphic/BufferObject.h
+    src/lite/graphic/ElementBufferObject.h
+    src/lite/graphic/ElementBufferObject.cpp
+)
+
 add_executable(LiteEngine main.cpp ${ENGINE_SOURCE})
 
 # GLFW

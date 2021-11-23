@@ -5,7 +5,6 @@ namespace lite {
     class Application {
     public:
         virtual void render(){};
-        virtual void dispose(){};
         virtual void onCreate(){};
     };
 }

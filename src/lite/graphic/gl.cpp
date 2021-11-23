@@ -32,5 +32,6 @@ void lite::enableVertexAttributeArray(int index) {
 }
 
 void lite::drawArrays(int type, int first, int count) {
-    glDrawArrays(type, first, count);
+    //glDrawArrays(type, first, count);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }

@@ -1,11 +1,11 @@
+#include <iostream>
 #include <lite/desktop/DesktopApplication.h>
 #include <lite/desktop/lite.h>
-#include <lite/graphic/VertexBufferObject.h>
-#include <lite/graphic/VertexAttributeObject.h>
+#include <lite/graphic/ElementBufferObject.h>
 #include <lite/graphic/ShaderProgram.h>
+#include <lite/graphic/VertexAttributeObject.h>
+#include <lite/graphic/VertexBufferObject.h>
 #include <lite/graphic/gl.h>
-#include <iostream>
-
 
 const char *vertex = "#version 330 core\n"
                      "layout (location = 0) in vec3 aPos;\n"
@@ -21,29 +21,29 @@ const char *fragment = "#version 330 core\n"
                        "   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
                        "}\n\0";
 
-
-class TestApp : public lite::Application {
-
+class TestApp : public lite::Application
+{
     lite::ShaderProgram *program;
     lite::VertexBufferObject *vbo;
     lite::VertexAttributeObject *vao;
+    lite::ElementBufferObject *ebo;
 
-    void onCreate() override {
-        float vertices[] = {
-                -0.5f, -0.5f, 0.0f,
-                0.5f, -0.5f, 0.0f,
-                0.0f, 0.5f, 0.0f
-        };
+    void onCreate() override
+    {
+        float vertices[]
+            = {0.5f, 0.5f, 0.0f, 0.5f, -0.5f, 0.0f, -0.5f, -0.5f, 0.0f, -0.5f, 0.5f, 0.0f};
+        unsigned int indices[] = {0, 1, 3, 1, 2, 3};
 
         program = new lite::ShaderProgram(vertex, fragment);
         vao = new lite::VertexAttributeObject();
         vbo = new lite::VertexBufferObject(vertices, sizeof(vertices));
+        ebo = new lite::ElementBufferObject(6, indices);
 
         vao->use();
         vbo->staticDraw();
+        ebo->staticDraw();
         lite::vertexAttribute(0, 3, lite::FLOAT, false, 3 * sizeof(float), nullptr);
         lite::enableVertexAttributeArray(0);
-
     }
 
     void render() override {
@@ -54,18 +54,25 @@ class TestApp : public lite::Application {
         lite::drawArrays(lite::TRIANGLE, 0, 3);
     }
 
-    void dispose() override {
+
+public:
+    ~TestApp()
+    {
         delete vbo;
         delete vao;
+        delete ebo;
         delete program;
     }
 };
 
-
-int main() {
+int main()
+{
     lite::init();
-    auto desktop = lite::DesktopApplication(new TestApp(), 800, 480, "test");
+    auto app = new TestApp();
+    auto desktop = lite::DesktopApplication(app, 800, 480, "test");
+
     desktop.start();
-    desktop.terminate();
+    delete app;
+    lite::dispose();
     return 0;
 }

@@ -12,9 +12,9 @@ namespace lite {
         Window *window;
     public:
         DesktopApplication(Application *application, int width, int height, std::string title);
+        ~DesktopApplication();
         bool shouldTerminate();
         void start();
-        void terminate();
     };
 }
 

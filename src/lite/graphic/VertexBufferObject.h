@@ -12,11 +12,10 @@ namespace lite {
         ~VertexBufferObject();
         int size;
         float *vertices;
-        VertexBufferObject(float *vertices = nullptr, int size = 0);
+        VertexBufferObject(float *vertices, int size);
         void staticDraw() override;
         void dynamicDraw() override;
         void streamDraw() override;
-        void copyVertices(const float *copingVertices);
         void dispose();
     };
 }
