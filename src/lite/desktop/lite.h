@@ -5,7 +5,7 @@
 namespace lite {
     void init();
     void update();
-    void dispose();
+    void terminate();
 }
 
 #endif

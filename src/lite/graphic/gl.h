@@ -6,6 +6,7 @@ namespace lite {
     void vertexAttribute(int index, int size, int type, bool normalized, int stride, const void *pointer);
     void enableVertexAttributeArray(int index);
     void drawArrays(int type, int first, int count);
+    void drawElements(int type, int count, int indecesType, const void *offset);
 
     extern const int COLOR_BUFFER;
     extern const int DEPTH_BUFFER;

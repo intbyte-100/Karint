@@ -1,6 +1,7 @@
 #ifndef LITEENGINE_SHADERPROGRAM_H
 #define LITEENGINE_SHADERPROGRAM_H
 
+#include "Uniform.h"
 
 #include <string>
 namespace lite {
@@ -10,6 +11,7 @@ namespace lite {
     public:
         ~ShaderProgram();
         ShaderProgram(const char *vertex, const char *fragment);
+        Uniform getUniform(const char *name);
         void dispose();
         void use();
     };

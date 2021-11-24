@@ -4,10 +4,8 @@
 namespace lite {
     class VertexBufferObject
     {
-    private:
-        unsigned int vbo;
-
     public:
+        unsigned int id;
         ~VertexBufferObject();
         int size;
         float *vertices;
@@ -16,6 +14,5 @@ namespace lite {
         void dispose();
     };
 }
-
 
 #endif

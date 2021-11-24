@@ -10,9 +10,7 @@ lite::DesktopApplication::DesktopApplication(Application *application, int width
 lite::DesktopApplication::~DesktopApplication()
 {
     window->close();
-    delete application;
     delete window;
-    dispose();
 }
 
 bool lite::DesktopApplication::shouldTerminate() {

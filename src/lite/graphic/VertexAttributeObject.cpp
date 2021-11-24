@@ -2,15 +2,15 @@
 #include "VertexAttributeObject.h"
 
 lite::VertexAttributeObject::VertexAttributeObject() {
-    glGenVertexArrays(1, &vao);
+    glGenVertexArrays(1, &id);
 }
 
 void lite::VertexAttributeObject::dispose() {
-    glDeleteVertexArrays(1, &vao);
+    glDeleteVertexArrays(1, &id);
 }
 
 void lite::VertexAttributeObject::use() {
-    glBindVertexArray(vao);
+    glBindVertexArray(id);
 }
 
 lite::VertexAttributeObject::~VertexAttributeObject() {

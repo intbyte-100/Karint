@@ -18,9 +18,10 @@ set(ENGINE_SOURCE
     src/lite/graphic/ShaderProgram.h
     src/lite/graphic/VertexAttributeObject.cpp
     src/lite/graphic/VertexAttributeObject.h
-    src/lite/graphic/BufferObject.h
     src/lite/graphic/ElementBufferObject.h
     src/lite/graphic/ElementBufferObject.cpp
+    src/lite/graphic/Uniform.h
+    src/lite/graphic/Uniform.cpp
 )
 
 add_executable(LiteEngine main.cpp ${ENGINE_SOURCE})

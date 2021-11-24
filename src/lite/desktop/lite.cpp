@@ -1,7 +1,8 @@
 
 #include "lite.h"
 
-void lite::dispose() {
+void lite::terminate()
+{
     glfwTerminate();
 }
 

@@ -3,9 +3,8 @@
 
 namespace lite{
     class VertexAttributeObject {
-    private:
-        unsigned int vao;
     public:
+        unsigned int id;
         ~VertexAttributeObject();
         VertexAttributeObject();
         void use();
