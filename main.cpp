@@ -9,27 +9,6 @@
 #include <lite/graphic/gl.h>
 #include <lite/util/LiteException.h>
 
-const char *vertex = "#version 330 core\n"
-                     "layout (location = 0) in vec3 aPos;\n"
-                     "layout (location = 1) in vec3 aColor;\n"
-                     "out vec3 color;\n"
-
-                     "void main()\n"
-                     "{\n"
-                     "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-                     "   color = aColor;\n"
-                     "}\0";
-
-const char *fragment = "#version 330 core\n"
-                       "out vec4 FragColor;\n"
-                       "in vec3 color;\n"
-                       "uniform vec4 uColor;\n"
-
-                       "void main()\n"
-                       "{\n"
-                       "   FragColor = vec4(color, 1.0)*uColor;\n"
-                       "}\n\0";
-
 class TestApp : public lite::Application
 {
     lite::ShaderProgram *program;
@@ -39,36 +18,10 @@ class TestApp : public lite::Application
 
     void onCreate() override
     {
-        float vertices[] = {
-            // positions         // colors
-            0.5f,
-            -0.5f,
-            0.0f,
-            1.0f,
-            0.0f,
-            0.0f, // bottom right
-            -0.5f,
-            -0.5f,
-            0.0f,
-            0.0f,
-            1.0f,
-            0.0f, // bottom left
-            0.0f,
-            0.5f,
-            0.0f,
-            0.0f,
-            0.0f,
-            1.0f // top
-        };
+        float vertices[] = {0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, -0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f};
         unsigned int indices[] = {0, 1, 3, 1, 2, 3};
 
-        try {
-            program = new lite::ShaderProgram(vertex, fragment);
-        } catch (lite::LiteException &e) {
-            std::cout << e.what();
-            exit(-1);
-        }
-
+        program = lite::ShaderProgram::load("triangle.vert", "triangle.frag");
         vao = new lite::VertexAttributeObject();
         vbo = new lite::VertexBufferObject(vertices, sizeof(vertices));
         ebo = new lite::ElementBufferObject(6, indices);
@@ -89,7 +42,7 @@ class TestApp : public lite::Application
         program->use();
         float color = sin(glfwGetTime()) / 2.0f + 0.5f;
         auto uColor = program->getUniform("uColor");
-        uColor.uniform4f(color, color, color, color);
+        uColor.setFloat(color);
         vao->use();
         lite::drawArrays(lite::TRIANGLE, 0, 3);
     }

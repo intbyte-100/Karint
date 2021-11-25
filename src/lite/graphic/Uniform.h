@@ -5,6 +5,13 @@ namespace lite {
     {
     public:
         int id;
-        void uniform4f(float r, float g, float b, float a);
+
+        void setFloat(float r, float g, float b, float a);
+        void setFloat(float r, float g, float b);
+        void setFloat(float x, float y);
+        void setFloat(float value);
+
+        void setBool(bool value);
+        void setInt(int value);
     };
 }

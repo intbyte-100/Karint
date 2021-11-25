@@ -1,12 +1,25 @@
 #!/bin/bash
 
-cp -r res ../build-lite_engine-Desktop-Debug
+mkdir -p build
+
+_exportRes(){
+    cp -r res build
+}
+_build(){
+    _exportRes
+    cd build
+    cmake -G "Unix Makefiles" ..
+    make
+}
 
 if [ "$1" == 'run' ]; then
-    cd ../build-lite_engine-Desktop-Debug
-    cmake -G "Unix Makefiles" ../lite_engine
-    make
+    _build
     ./LiteEngine
+elif [ "$1" == "build" ]; then
+    _build
+elif [ "$1" == "export_res" ]; then
+    _exportRes
+    echo resource exporting has finished 
 fi
 
 

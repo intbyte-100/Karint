@@ -14,6 +14,7 @@ namespace lite {
         Uniform getUniform(const char *name);
         void dispose();
         void use();
+        static ShaderProgram *load(const std::string &vertex, const std::string &fragment);
     };
 }
 

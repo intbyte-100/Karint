@@ -1,6 +1,9 @@
 #include "ShaderProgram.h"
+#include <fstream>
 #include <glad/glad.h>
 #include <lite/util/LiteException.h>
+#include <sstream>
+#include <string>
 
 lite::ShaderProgram::ShaderProgram(const char *vertex, const char *fragment)
 {
@@ -16,6 +19,9 @@ lite::ShaderProgram::ShaderProgram(const char *vertex, const char *fragment)
         glGetShaderInfoLog(vertexShader, 512, nullptr, infoLog);
         std::string message = "Error: cannot compile vertex shader: ";
         message.append(infoLog);
+        message.append("\nshader source:\n");
+        message.append(vertex);
+
         throw lite::LiteException(message);
     }
 
@@ -26,6 +32,9 @@ lite::ShaderProgram::ShaderProgram(const char *vertex, const char *fragment)
     if (!success) {
         glGetShaderInfoLog(fragmentShader, 512, nullptr, infoLog);
         std::string message = "Error: cannot compile fragment shader: ";
+        message.append(infoLog);
+        message.append("\nshader source:\n");
+        message.append(fragment);
         throw lite::LiteException(message);
     }
 
@@ -61,6 +70,22 @@ void lite::ShaderProgram::dispose()
 void lite::ShaderProgram::use()
 {
     glUseProgram(shaderProgram);
+}
+
+lite::ShaderProgram *lite::ShaderProgram::load(const std::string &vertex, const std::string &fragment)
+{
+    std::ifstream file;
+    std::stringstream vShaderStream, fShaderStream;
+
+    file.open(vertex);
+    vShaderStream << file.rdbuf();
+    file.close();
+
+    file.open(fragment);
+    fShaderStream << file.rdbuf();
+    file.close();
+
+    return new ShaderProgram(vShaderStream.str().c_str(), fShaderStream.str().c_str());
 }
 
 lite::ShaderProgram::~ShaderProgram()
