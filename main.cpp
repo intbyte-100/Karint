@@ -11,18 +11,23 @@
 
 const char *vertex = "#version 330 core\n"
                      "layout (location = 0) in vec3 aPos;\n"
+                     "layout (location = 1) in vec3 aColor;\n"
+                     "out vec3 color;\n"
+
                      "void main()\n"
                      "{\n"
-                     "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"                  
+                     "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+                     "   color = aColor;\n"
                      "}\0";
 
 const char *fragment = "#version 330 core\n"
                        "out vec4 FragColor;\n"
-                       "uniform vec4 color;\n"
+                       "in vec3 color;\n"
+                       "uniform vec4 uColor;\n"
 
                        "void main()\n"
                        "{\n"
-                       "   FragColor = color;\n"
+                       "   FragColor = vec4(color, 1.0)*uColor;\n"
                        "}\n\0";
 
 class TestApp : public lite::Application
@@ -34,12 +39,32 @@ class TestApp : public lite::Application
 
     void onCreate() override
     {
-        float vertices[] = {0.5f, 0.5f, 0.0f, 0.5f, -0.5f, 0.0f, -0.5f, -0.5f, 0.0f, -0.5f, 0.5f, 0.0f};
+        float vertices[] = {
+            // positions         // colors
+            0.5f,
+            -0.5f,
+            0.0f,
+            1.0f,
+            0.0f,
+            0.0f, // bottom right
+            -0.5f,
+            -0.5f,
+            0.0f,
+            0.0f,
+            1.0f,
+            0.0f, // bottom left
+            0.0f,
+            0.5f,
+            0.0f,
+            0.0f,
+            0.0f,
+            1.0f // top
+        };
         unsigned int indices[] = {0, 1, 3, 1, 2, 3};
 
         try {
             program = new lite::ShaderProgram(vertex, fragment);
-        } catch (lite::LiteException e) {
+        } catch (lite::LiteException &e) {
             std::cout << e.what();
             exit(-1);
         }
@@ -52,23 +77,21 @@ class TestApp : public lite::Application
         vbo->draw(lite::STATIC_DRAW);
         ebo->draw(lite::STATIC_DRAW);
 
-        lite::vertexAttribute(0, 3, lite::FLOAT, false, 3 * sizeof(float), nullptr);
+        lite::vertexAttribute(0, 3, lite::FLOAT, false, 6 * sizeof(float), nullptr);
         lite::enableVertexAttributeArray(0);
+        lite::vertexAttribute(1, 3, lite::FLOAT, false, 6 * sizeof(float), (void *) (3 * sizeof(float)));
+        lite::enableVertexAttributeArray(1);
     }
 
     void render() override
     {
         lite::clearScreen(0.5, 0.3, 0.6, 1.0, lite::COLOR_BUFFER);
         program->use();
-        lite::Uniform color = program->getUniform("color");
-
-        float time = glfwGetTime();
-        float green = sin(time) / 2.0f + 0.5;
-        float red = cos(time) / 2.0f + 0.5f;
-        color.uniform4f(red, green, 0.0f, 1.0f);
-
+        float color = sin(glfwGetTime()) / 2.0f + 0.5f;
+        auto uColor = program->getUniform("uColor");
+        uColor.uniform4f(color, color, color, color);
         vao->use();
-        lite::drawElements(lite::TRIANGLE, 6, lite::UNSIGNED_INT, 0);
+        lite::drawArrays(lite::TRIANGLE, 0, 3);
     }
 
 public:
