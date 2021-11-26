@@ -15,6 +15,8 @@ class TestApp : public lite::Application
     lite::VertexBufferObject *vbo;
     lite::VertexAttributeObject *vao;
     lite::ElementBufferObject *ebo;
+    lite::Uniform uColor;
+    lite::Uniform cosTime;
 
     void onCreate() override
     {
@@ -25,6 +27,9 @@ class TestApp : public lite::Application
         vao = new lite::VertexAttributeObject();
         vbo = new lite::VertexBufferObject(vertices, sizeof(vertices));
         ebo = new lite::ElementBufferObject(6, indices);
+
+        uColor = program->getUniform("uColor");
+        cosTime = program->getUniform("cosTime");
 
         vao->use();
         vbo->draw(lite::STATIC_DRAW);
@@ -40,9 +45,10 @@ class TestApp : public lite::Application
     {
         lite::clearScreen(0.5, 0.3, 0.6, 1.0, lite::COLOR_BUFFER);
         program->use();
-        float color = sin(glfwGetTime()) / 2.0f + 0.5f;
-        auto uColor = program->getUniform("uColor");
+        float color = sin(glfwGetTime() * 2) / 2.0f + 0.5f;
+
         uColor.setFloat(color);
+        cosTime.setFloat(sin(glfwGetTime()));
         vao->use();
         lite::drawArrays(lite::TRIANGLE, 0, 3);
     }
@@ -61,7 +67,7 @@ int main()
 {
     lite::init();
     TestApp *app = new TestApp;
-    lite::DesktopApplication(app, 800, 480, "test").start();
+    lite::DesktopApplication(app, 800, 480, "lite engine").start();
     delete app;
     lite::terminate();
     return 0;

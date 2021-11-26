@@ -35,4 +35,11 @@ add_library("glad" "${GLAD_DIR}/src/glad.c")
 include_directories("src")
 target_include_directories("glad" PRIVATE "${GLAD_DIR}/include")
 target_include_directories(${PROJECT_NAME} PRIVATE "${GLAD_DIR}/include")
+
 target_link_libraries(${PROJECT_NAME} "glad" "${CMAKE_DL_LIBS}" glfw)
+
+add_library("stb" "include/stb_image/stb_implementation.cpp")
+target_include_directories("stb" PRIVATE "include/stb_image")
+target_include_directories(${PROJECT_NAME} PRIVATE "include/stb_image")
+
+target_link_libraries(${PROJECT_NAME} "stb")

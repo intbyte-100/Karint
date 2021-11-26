@@ -18,9 +18,7 @@ lite::ShaderProgram::ShaderProgram(const char *vertex, const char *fragment)
     if (!success) {
         glGetShaderInfoLog(vertexShader, 512, nullptr, infoLog);
         std::string message = "Error: cannot compile vertex shader: ";
-        message.append(infoLog);
-        message.append("\nshader source:\n");
-        message.append(vertex);
+        message.append(infoLog).append("\nshader source:\n").append(vertex);
 
         throw lite::LiteException(message);
     }
@@ -32,9 +30,7 @@ lite::ShaderProgram::ShaderProgram(const char *vertex, const char *fragment)
     if (!success) {
         glGetShaderInfoLog(fragmentShader, 512, nullptr, infoLog);
         std::string message = "Error: cannot compile fragment shader: ";
-        message.append(infoLog);
-        message.append("\nshader source:\n");
-        message.append(fragment);
+        message.append(infoLog).append("\nshader source:\n").append(fragment);
         throw lite::LiteException(message);
     }
 
