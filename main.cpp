@@ -4,6 +4,7 @@
 #include <lite/desktop/lite.h>
 #include <lite/graphic/ElementBufferObject.h>
 #include <lite/graphic/ShaderProgram.h>
+#include <lite/graphic/Texture.h>
 #include <lite/graphic/VertexAttributeObject.h>
 #include <lite/graphic/VertexBufferObject.h>
 #include <lite/graphic/gl.h>
@@ -39,6 +40,9 @@ class TestApp : public lite::Application
         lite::enableVertexAttributeArray(0);
         lite::vertexAttribute(1, 3, lite::FLOAT, false, 6 * sizeof(float), (void *) (3 * sizeof(float)));
         lite::enableVertexAttributeArray(1);
+
+        auto texture = lite::Texture::load("wall.jpg");
+        delete texture;
     }
 
     void render() override

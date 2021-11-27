@@ -8,5 +8,5 @@ uniform float cosTime;
 void main()
 {
     gl_Position = vec4(cosTime*aPos, 1.0);
-    ourColor = aColor;
+    ourColor = aPos;
 }

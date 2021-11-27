@@ -24,6 +24,24 @@ namespace lite {
     extern const int LINE;
     extern const int TRIANGLE;
 
-    extern const unsigned int STATIC_DRAW, DYNAMIC_DRAW, STREAM_DRAW;
+    extern const unsigned int STATIC_DRAW;
+    extern const unsigned int DYNAMIC_DRAW;
+    extern const unsigned int STREAM_DRAW;
 
+    extern const int TEXTURE_WRAP_X;
+    extern const int TEXTURE_WRAP_Y;
+    extern const int TEXTURE_MIN_FILTER;
+    extern const int TEXTURE_MAG_FILTER;
+
+    extern const int REPEAT;
+    extern const int MIRRORED_REPEAT;
+    extern const int CLAMP_TO_EDGE;
+    extern const int CLAMP_TO_BORDER;
+
+    extern const int LINEAR;
+    extern const int NEAREST;
+    extern const int NEAREST_MIPMAP_NEAREST;
+    extern const int LINEAR_MIPMAP_NEAREST;
+    extern const int NEAREST_MIPMAP_LINEAR;
+    extern const int LINEAR_MIPMAP_LINEAR;
 }

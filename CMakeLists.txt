@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 2.19)
 project(LiteEngine)
 
 set(CMAKE_CXX_STANDARD 14)
+set( CMAKE_EXPORT_COMPILE_COMMANDS ON )
+
 
 set(ENGINE_SOURCE
     src/lite/desktop/Window.cpp
@@ -22,6 +24,9 @@ set(ENGINE_SOURCE
     src/lite/graphic/ElementBufferObject.cpp
     src/lite/graphic/Uniform.h
     src/lite/graphic/Uniform.cpp
+    src/lite/graphic/Texture.h
+    src/lite/graphic/Texture.cpp
+    src/lite/util/FileNotFoundException.h
 )
 
 add_executable(LiteEngine main.cpp ${ENGINE_SOURCE})

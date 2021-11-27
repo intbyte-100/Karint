@@ -9,7 +9,7 @@ namespace lite {
     public:
         explicit LiteException(const std::string &message){
             this->message = message.c_str();
-            std::cout << message;
+            std::cout << "ERROR: " << message << std::endl;
         }
         const char * what() const noexcept override {
             return message;
