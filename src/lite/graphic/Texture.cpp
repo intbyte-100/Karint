@@ -8,7 +8,6 @@
 lite::Texture::Texture()
 {
     glGenTextures(1, &id);
-    glBindTexture(GL_TEXTURE_2D, id);
 }
 
 lite::Texture::~Texture()
@@ -31,6 +30,11 @@ void lite::Texture::generateMipmap()
     glGenerateMipmap(GL_TEXTURE_2D);
 }
 
+void lite::Texture::bind()
+{
+    glBindTexture(GL_TEXTURE_2D, id);
+}
+
 lite::Texture *lite::Texture::load(const std::string &file)
 {
     int width;
@@ -41,15 +45,17 @@ lite::Texture *lite::Texture::load(const std::string &file)
     if (image == 0) {
         throw new FileNotFoundException("file " + file + " is not found");
     }
+
     Texture *texture = new Texture();
+    texture->bind();
     texture->setImage(0, width, height, image);
 
-    texture->generateMipmap();
     texture->setParameter(TEXTURE_WRAP_X, REPEAT);
     texture->setParameter(TEXTURE_WRAP_Y, REPEAT);
     texture->setParameter(TEXTURE_MIN_FILTER, LINEAR_MIPMAP_LINEAR);
     texture->setParameter(TEXTURE_MAG_FILTER, LINEAR);
 
+    texture->generateMipmap();
     stbi_image_free(image);
     return texture;
 }

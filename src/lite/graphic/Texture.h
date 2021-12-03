@@ -13,6 +13,7 @@ namespace lite {
         void setImage(int mipmapLevel, int width, int height, unsigned char *image);
         void setParameter(int type, int value);
         void generateMipmap();
+        void bind();
         static Texture *load(const std::string &file);
     };
 }
