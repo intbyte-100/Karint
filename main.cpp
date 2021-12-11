@@ -1,3 +1,4 @@
+#include "glm/glm.hpp"
 #include <cmath>
 #include <iostream>
 #include <lite/desktop/DesktopApplication.h>
@@ -7,8 +8,10 @@
 #include <lite/graphic/Texture.h>
 #include <lite/graphic/VertexAttributeObject.h>
 #include <lite/graphic/VertexBufferObject.h>
+#include <lite/graphic/attribute/AttributeArray.h>
 #include <lite/graphic/gl.h>
 #include <lite/util/LiteException.h>
+
 class TestApp : public lite::Application
 {
     lite::ShaderProgram *program;
@@ -40,14 +43,15 @@ class TestApp : public lite::Application
         vbo->draw(lite::STATIC_DRAW);
         ebo->draw(lite::STATIC_DRAW);
 
-        lite::vertexAttribute(0, 3, lite::FLOAT, false, 8 * sizeof(float), nullptr);
-        lite::enableVertexAttributeArray(0);
-        lite::vertexAttribute(1, 3, lite::FLOAT, false, 8 * sizeof(float), (void *) (3 * sizeof(float)));
-        lite::enableVertexAttributeArray(1);
-        lite::vertexAttribute(2, 2, lite::FLOAT, false, 8 * sizeof(float), (void *) (6 * sizeof(float)));
-        lite::enableVertexAttributeArray(2);
+        lite::AttributeArray attributeArray;
 
-        texture = lite::Texture::load("cl.jpg");
+        attributeArray.add(lite::POSITION_ATTRIBUTE);
+        attributeArray.add(lite::RGB_ATTRIBUTE);
+        attributeArray.add(lite::TEXTURE_2D_ATTRIBUTE);
+
+        attributeArray.enable();
+
+        texture = lite::Texture::load("wall.jpg");
 
         cosTime = program->getUniform("cosTime");
     }

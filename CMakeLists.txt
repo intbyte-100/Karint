@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.19)
 project(LiteEngine)
 
 set(CMAKE_CXX_STANDARD 14)
-set( CMAKE_EXPORT_COMPILE_COMMANDS ON )
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON )
 
 
 set(ENGINE_SOURCE
@@ -27,9 +27,17 @@ set(ENGINE_SOURCE
     src/lite/graphic/Texture.h
     src/lite/graphic/Texture.cpp
     src/lite/util/FileNotFoundException.h
+    src/lite/graphic/attribute/RGBAttribute.h
+    src/lite/graphic/attribute/PositionAttribute.h
+    src/lite/graphic/attribute/AttributeArray.h
+    src/lite/graphic/attribute/AttributeArray.cpp
+    src/lite/graphic/attribute/ColorAttribute.h
 )
 
 add_executable(LiteEngine main.cpp ${ENGINE_SOURCE})
+
+find_package(glm REQUIRED)
+target_link_libraries("${PROJECT_NAME}" glm)
 
 # GLFW
 find_package(glfw3 3.3 REQUIRED)
