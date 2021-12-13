@@ -1,10 +1,11 @@
+// clang-format off
 #include <glad/glad.h>
+#include "Window.h"
 #include <GLFW/glfw3.h>
 #include <lite/util/LiteException.h>
-#include "Window.h"
+// clang-format on
 
-
-void framebuffer_size_callback(GLFWwindow* window, int width, int height)
+void framebuffer_size_callback(GLFWwindow *window, int width, int height)
 {
     glViewport(0, 0, width, height);
 }
@@ -26,7 +27,6 @@ lite::Window::Window(const std::string &title, int width, int height){
 
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
     glViewport(0, 0, width, height);
-
 }
 
 bool lite::Window::shouldClose() {
