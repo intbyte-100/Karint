@@ -14,7 +14,6 @@
 #include <lite/graphic/attribute/AttributeArray.h>
 #include <lite/graphic/gl.h>
 #include <lite/util/LiteException.h>
-#include <unistd.h>
 
 class TestApp : public lite::Application
 {
@@ -23,6 +22,7 @@ class TestApp : public lite::Application
     lite::VertexAttributeObject *vao;
     lite::ElementBufferObject *ebo;
     lite::Texture *texture = nullptr;
+    lite::Texture *texture2 = nullptr;
     lite::Uniform transform;
 
     void onCreate() override
@@ -54,14 +54,21 @@ class TestApp : public lite::Application
         attributeArray.enable();
 
         texture = lite::Texture::load("wall.jpg");
+        texture2 = lite::Texture::load("cl.jpg");
         transform = program->getUniform("transform");
+
+        program->use();
+        program->getUniform("texture1").setInt(0);
+        program->getUniform("texture2").setInt(1);
     }
 
     void render() override
     {
         lite::clearScreen(0.5, 0.3, 0.6, 1.0, lite::COLOR_BUFFER);
 
-        texture->bind();
+        texture->bind(0);
+        texture2->bind(1);
+
         program->use();
 
         glm::mat4 trans = glm::mat4(1.0f);
@@ -72,7 +79,6 @@ class TestApp : public lite::Application
 
         vao->use();
         lite::drawElements(lite::TRIANGLE, 6, lite::UNSIGNED_INT, 0);
-        usleep(16000);
     }
 
 public:

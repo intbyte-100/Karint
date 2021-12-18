@@ -14,6 +14,7 @@ namespace lite {
         void setParameter(int type, int value);
         void generateMipmap();
         void bind();
+        void bind(char activeTextureIndex);
         static Texture *load(const std::string &file);
     };
 }

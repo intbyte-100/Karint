@@ -60,3 +60,8 @@ void lite::drawElements(int type, int count, int indecesType, const void *offset
 {
     glDrawElements(type, count, indecesType, offset);
 }
+
+void lite::activeTexture(char index)
+{
+    glActiveTexture(GL_TEXTURE0 + index);
+}

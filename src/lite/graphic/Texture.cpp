@@ -35,6 +35,12 @@ void lite::Texture::bind()
     glBindTexture(GL_TEXTURE_2D, id);
 }
 
+void lite::Texture::bind(char activeTextureIndex)
+{
+    bind();
+    activeTexture(activeTextureIndex);
+}
+
 lite::Texture *lite::Texture::load(const std::string &file)
 {
     int width;

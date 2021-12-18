@@ -7,6 +7,7 @@ namespace lite {
     void enableVertexAttributeArray(int index);
     void drawArrays(int type, int first, int count);
     void drawElements(int type, int count, int indecesType, const void *offset);
+    void activeTexture(char index);
 
     extern const int COLOR_BUFFER;
     extern const int DEPTH_BUFFER;
