@@ -12,14 +12,18 @@ namespace lite {
             short position;
             int type;
             char size;
-            char typeSize;
         };
     }
-    typedef char AttributeType;
-    constexpr AttributeType RGB_ATTRIBUTE = 3;
-    constexpr AttributeType RGBA_ATTRIBUTE = 4;
-    constexpr AttributeType POSITION_ATTRIBUTE = 3;
-    constexpr AttributeType TEXTURE_2D_ATTRIBUTE = 2;
+    typedef short AttributeType;
+
+    /** the first digit is count of elements,
+        the second digit is element type, wich compute by subtraction of type and GL_BYTE,
+        the third digit is type size
+    **/
+    constexpr AttributeType RGB_ATTRIBUTE = 0x364;
+    constexpr AttributeType RGBA_ATTRIBUTE = 0x464;
+    constexpr AttributeType POSITION_ATTRIBUTE = 0x364;
+    constexpr AttributeType TEXTURE_2D_ATTRIBUTE = 0x264;
 
     class AttributeArray
     {
