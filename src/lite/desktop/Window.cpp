@@ -5,6 +5,8 @@
 #include <lite/util/LiteException.h>
 // clang-format on
 
+lite::Window *currentWindow;
+
 void framebuffer_size_callback(GLFWwindow *window, int width, int height)
 {
     glViewport(0, 0, width, height);
@@ -29,6 +31,11 @@ lite::Window::Window(const std::string &title, int width, int height){
     glViewport(0, 0, width, height);
 }
 
+void lite::Window::getSize(int *width, int *height)
+{
+    glfwGetWindowSize(window, width, height);
+}
+
 bool lite::Window::shouldClose() {
     return glfwWindowShouldClose(window);
 }
@@ -45,6 +52,16 @@ void lite::Window::dispose() {
 void lite::Window::close() {
     glfwSetWindowShouldClose(window, true);
     dispose();
+}
+
+void lite::Window::makeCurrent()
+{
+    currentWindow = this;
+}
+
+lite::Window *lite::Window::getCurrent()
+{
+    return currentWindow;
 }
 
 bool lite::Window::isPressed(int key) {

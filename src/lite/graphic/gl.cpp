@@ -4,6 +4,7 @@
 
 const int lite::COLOR_BUFFER = GL_COLOR_BUFFER_BIT;
 const int lite::DEPTH_BUFFER = GL_DEPTH_BUFFER_BIT;
+const int lite::DEPTH_TEST = GL_DEPTH_TEST;
 const int lite::FLOAT = GL_FLOAT;
 const int lite::DOUBLE = GL_DOUBLE;
 const int lite::BYTE = GL_BYTE;
@@ -64,4 +65,9 @@ void lite::drawElements(int type, int count, int indecesType, const void *offset
 void lite::activeTexture(char index)
 {
     glActiveTexture(GL_TEXTURE0 + index);
+}
+
+void lite::enable(int option)
+{
+    glEnable(option);
 }

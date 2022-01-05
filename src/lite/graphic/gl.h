@@ -8,9 +8,11 @@ namespace lite {
     void drawArrays(int type, int first, int count);
     void drawElements(int type, int count, int indecesType, const void *offset);
     void activeTexture(char index);
+    void enable(int option);
 
     extern const int COLOR_BUFFER;
     extern const int DEPTH_BUFFER;
+    extern const int DEPTH_TEST;
 
     extern const int DOUBLE;
     extern const int BYTE;

@@ -27,7 +27,6 @@ set(ENGINE_SOURCE
     src/lite/graphic/Texture.h
     src/lite/graphic/Texture.cpp
     src/lite/util/FileNotFoundException.h
-    src/lite/graphic/attribute/RGBAttribute.h
     src/lite/graphic/attribute/PositionAttribute.h
     src/lite/graphic/attribute/AttributeArray.h
     src/lite/graphic/attribute/AttributeArray.cpp

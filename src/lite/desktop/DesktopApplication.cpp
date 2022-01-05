@@ -20,6 +20,7 @@ bool lite::DesktopApplication::shouldTerminate() {
 void lite::DesktopApplication::start() {
     application->onCreate();
     while (!shouldTerminate()){
+        window->makeCurrent();
         application->render();
         lite::update();
         window->update();

@@ -1,4 +1,5 @@
 #pragma once
+#include "glm/glm.hpp"
 
 namespace lite {
     class Uniform
@@ -13,5 +14,6 @@ namespace lite {
 
         void setBool(bool value);
         void setInt(int value);
+        void setMatrix(glm::mat4 &matrix, bool transpose);
     };
 }

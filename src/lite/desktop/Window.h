@@ -10,11 +10,14 @@ namespace lite {
         GLFWwindow *window;
     public:
         Window(const std::string&, int  width, int height);
+        void getSize(int *width, int *height);
         bool isPressed(int key);
         bool shouldClose();
         void update();
         void dispose();
         void close();
+        void makeCurrent();
+        static Window *getCurrent();
     };
 }
 

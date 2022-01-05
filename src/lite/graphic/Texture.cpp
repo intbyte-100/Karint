@@ -5,19 +5,14 @@
 
 #include <lite/util/FileNotFoundException.h>
 
-lite::Texture::Texture()
-{
-    glGenTextures(1, &id);
-}
-
-lite::Texture::~Texture()
+void lite::Texture::dispose()
 {
     glDeleteTextures(1, &id);
 }
 
-void lite::Texture::setImage(int mipmapLevel, int width, int height, unsigned char *image)
+void lite::Texture::setImage(int mipmapLevel, int sourceChanel, int glChanel, int width, int height, unsigned char *image)
 {
-    glTexImage2D(GL_TEXTURE_2D, mipmapLevel, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+    glTexImage2D(GL_TEXTURE_2D, mipmapLevel, sourceChanel, width, height, 0, glChanel, GL_UNSIGNED_BYTE, image);
 }
 
 void lite::Texture::setParameter(int type, int value)
@@ -41,7 +36,12 @@ void lite::Texture::bind(char activeTextureIndex)
     activeTexture(activeTextureIndex);
 }
 
-lite::Texture *lite::Texture::load(const std::string &file)
+void lite::Texture::create()
+{
+    glGenTextures(1, &id);
+}
+
+lite::Texture lite::Texture::load(const std::string &file)
 {
     int width;
     int height;
@@ -52,16 +52,20 @@ lite::Texture *lite::Texture::load(const std::string &file)
         throw new FileNotFoundException("file " + file + " is not found");
     }
 
-    Texture *texture = new Texture();
-    texture->bind();
-    texture->setImage(0, width, height, image);
+    Texture texture;
+    texture.create();
 
-    texture->setParameter(TEXTURE_WRAP_X, REPEAT);
-    texture->setParameter(TEXTURE_WRAP_Y, REPEAT);
-    texture->setParameter(TEXTURE_MIN_FILTER, LINEAR_MIPMAP_LINEAR);
-    texture->setParameter(TEXTURE_MAG_FILTER, LINEAR);
+    texture.bind();
+    channels = (channels == 3) ? GL_RGB : GL_RGBA;
 
-    texture->generateMipmap();
+    texture.setImage(0, channels, channels, width, height, image);
+
+    texture.setParameter(TEXTURE_WRAP_X, REPEAT);
+    texture.setParameter(TEXTURE_WRAP_Y, REPEAT);
+    texture.setParameter(TEXTURE_MIN_FILTER, LINEAR_MIPMAP_LINEAR);
+    texture.setParameter(TEXTURE_MAG_FILTER, LINEAR);
+
+    texture.generateMipmap();
     stbi_image_free(image);
     return texture;
 }

@@ -21,30 +21,40 @@ class TestApp : public lite::Application
     lite::VertexBufferObject *vbo;
     lite::VertexAttributeObject *vao;
     lite::ElementBufferObject *ebo;
-    lite::Texture *texture = nullptr;
-    lite::Texture *texture2 = nullptr;
-    lite::Uniform transform;
+    lite::Texture texture;
+    lite::Texture texture2;
+    lite::Uniform projectionUniform;
+    lite::Uniform viewUniform;
+    lite::Uniform modelUniform;
 
     void onCreate() override
     {
         //float vertices[] = {0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, -0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f};
-        float vertices[] = {
-            // positions          // texture coords
-            0.5f,  0.5f,  0.0f, 1.0f, 1.0f, // top right
-            0.5f,  -0.5f, 0.0f, 1.0f, 0.0f, // bottom right
-            -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, // bottom left
-            -0.5f, 0.5f,  0.0f, 0.0f, 1.0f  // top left
-        };
+        float vertices[] = {-0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 0.5f,  -0.5f, -0.5f, 1.0f, 0.0f, 0.5f,  0.5f,  -0.5f, 1.0f, 1.0f,
+                            0.5f,  0.5f,  -0.5f, 1.0f, 1.0f, -0.5f, 0.5f,  -0.5f, 0.0f, 1.0f, -0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
+
+                            -0.5f, -0.5f, 0.5f,  0.0f, 0.0f, 0.5f,  -0.5f, 0.5f,  1.0f, 0.0f, 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+                            0.5f,  0.5f,  0.5f,  1.0f, 1.0f, -0.5f, 0.5f,  0.5f,  0.0f, 1.0f, -0.5f, -0.5f, 0.5f,  0.0f, 0.0f,
+
+                            -0.5f, 0.5f,  0.5f,  1.0f, 0.0f, -0.5f, 0.5f,  -0.5f, 1.0f, 1.0f, -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
+                            -0.5f, -0.5f, -0.5f, 0.0f, 1.0f, -0.5f, -0.5f, 0.5f,  0.0f, 0.0f, -0.5f, 0.5f,  0.5f,  1.0f, 0.0f,
+
+                            0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.5f,  0.5f,  -0.5f, 1.0f, 1.0f, 0.5f,  -0.5f, -0.5f, 0.0f, 1.0f,
+                            0.5f,  -0.5f, -0.5f, 0.0f, 1.0f, 0.5f,  -0.5f, 0.5f,  0.0f, 0.0f, 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+                            -0.5f, -0.5f, -0.5f, 0.0f, 1.0f, 0.5f,  -0.5f, -0.5f, 1.0f, 1.0f, 0.5f,  -0.5f, 0.5f,  1.0f, 0.0f,
+                            0.5f,  -0.5f, 0.5f,  1.0f, 0.0f, -0.5f, -0.5f, 0.5f,  0.0f, 0.0f, -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
+
+                            -0.5f, 0.5f,  -0.5f, 0.0f, 1.0f, 0.5f,  0.5f,  -0.5f, 1.0f, 1.0f, 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+                            0.5f,  0.5f,  0.5f,  1.0f, 0.0f, -0.5f, 0.5f,  0.5f,  0.0f, 0.0f, -0.5f, 0.5f,  -0.5f, 0.0f, 1.0f};
         unsigned int indices[] = {0, 1, 3, 1, 2, 3};
 
         program = lite::ShaderProgram::load("triangle.vert", "triangle.frag");
         vao = new lite::VertexAttributeObject();
         vbo = new lite::VertexBufferObject(vertices, sizeof(vertices));
-        ebo = new lite::ElementBufferObject(6, indices);
 
         vao->use();
         vbo->draw(lite::STATIC_DRAW);
-        ebo->draw(lite::STATIC_DRAW);
 
         lite::AttributeArray attributeArray;
 
@@ -53,9 +63,11 @@ class TestApp : public lite::Application
 
         attributeArray.enable();
 
-        texture = lite::Texture::load("wall.jpg");
-        texture2 = lite::Texture::load("cl.jpg");
-        transform = program->getUniform("transform");
+        texture = lite::Texture::load("cl.jpg");
+        texture2 = lite::Texture::load("awesomeface.png");
+        projectionUniform = program->getUniform("projection");
+        viewUniform = program->getUniform("view");
+        modelUniform = program->getUniform("model");
 
         program->use();
         program->getUniform("texture1").setInt(0);
@@ -64,21 +76,29 @@ class TestApp : public lite::Application
 
     void render() override
     {
-        lite::clearScreen(0.5, 0.3, 0.6, 1.0, lite::COLOR_BUFFER);
+        lite::enable(lite::DEPTH_TEST);
+        lite::clearScreen(0.5, 0.3, 0.6, 1.0, lite::COLOR_BUFFER | lite::DEPTH_BUFFER);
 
-        texture->bind(0);
-        texture2->bind(1);
+        int width, height;
+        lite::Window::getCurrent()->getSize(&width, &height);
 
+        texture.bind(0);
+        texture2.bind(1);
         program->use();
 
-        glm::mat4 trans = glm::mat4(1.0f);
+        glm::mat4 proj = glm::perspective(glm::radians(45.0f), (float) width / (float) height, 0.1f, 100.0f);
+        glm::mat4 model = glm::mat4(1.0f);
+        glm::mat4 view = glm::mat4(1.0f);
 
-        trans = glm::rotate(trans, (float) glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
+        view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+        model = glm::rotate(model, (float) glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
 
-        glUniformMatrix4fv(transform.id, 1, false, glm::value_ptr(trans));
+        projectionUniform.setMatrix(proj, false);
+        viewUniform.setMatrix(view, false);
+        modelUniform.setMatrix(model, false);
 
         vao->use();
-        lite::drawElements(lite::TRIANGLE, 6, lite::UNSIGNED_INT, 0);
+        lite::drawArrays(lite::TRIANGLE, 0, 36);
     }
 
 public:
@@ -88,7 +108,8 @@ public:
         delete vao;
         delete ebo;
         delete program;
-        delete texture;
+        texture.dispose();
+        texture2.dispose();
     }
 };
 
