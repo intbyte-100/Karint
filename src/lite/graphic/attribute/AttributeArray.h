@@ -10,15 +10,15 @@ namespace lite {
         struct Attribute
         {
             short position;
-            int type;
+            short type;
             char size;
         };
     }
     typedef short AttributeType;
 
-    /** the first digit is count of elements,
-        the second digit is element type, wich compute by subtraction of type and GL_BYTE,
-        the third digit is type size
+    /** the first digit is a count of elements,
+        the second digit is an element type, which compute by subtraction of type and GL_BYTE,
+        the third digit is a type size
     **/
     constexpr AttributeType RGB_ATTRIBUTE = 0x364;
     constexpr AttributeType RGBA_ATTRIBUTE = 0x464;
@@ -28,14 +28,11 @@ namespace lite {
     class AttributeArray
     {
     private:
-        int layerSize = 0;
+        short layerSize = 0;
         std::vector<Attribute> attributes;
 
     public:
         void enable();
         void add(AttributeType attribute);
-        ColorAttribute *getRGBAttribute(int layer);
-        ColorAttribute *getRGBAAttribute(int layer);
-        PositionAttribute *getPositionAttribute(int layer);
     };
 }

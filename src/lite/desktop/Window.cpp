@@ -21,8 +21,7 @@ lite::Window::Window(const std::string &title, int width, int height){
 
     glfwMakeContextCurrent(window);
 
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-    {
+    if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress)) {
         glfwTerminate();
         throw lite::LiteException("Failed to initialize GLAD");
     }

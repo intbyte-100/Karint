@@ -1,9 +1,5 @@
-#include "glad/glad.h"
 #include "glm/glm.hpp"
-#include <cmath>
 #include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
-#include <iostream>
 #include <lite/desktop/DesktopApplication.h>
 #include <lite/desktop/lite.h>
 #include <lite/graphic/ElementBufferObject.h>
@@ -13,7 +9,6 @@
 #include <lite/graphic/VertexBufferObject.h>
 #include <lite/graphic/attribute/AttributeArray.h>
 #include <lite/graphic/gl.h>
-#include <lite/util/LiteException.h>
 
 class TestApp : public lite::Application
 {
@@ -29,7 +24,6 @@ class TestApp : public lite::Application
 
     void onCreate() override
     {
-        //float vertices[] = {0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, -0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f};
         float vertices[] = {-0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 0.5f,  -0.5f, -0.5f, 1.0f, 0.0f, 0.5f,  0.5f,  -0.5f, 1.0f, 1.0f,
                             0.5f,  0.5f,  -0.5f, 1.0f, 1.0f, -0.5f, 0.5f,  -0.5f, 0.0f, 1.0f, -0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
 
@@ -47,7 +41,6 @@ class TestApp : public lite::Application
 
                             -0.5f, 0.5f,  -0.5f, 0.0f, 1.0f, 0.5f,  0.5f,  -0.5f, 1.0f, 1.0f, 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
                             0.5f,  0.5f,  0.5f,  1.0f, 0.0f, -0.5f, 0.5f,  0.5f,  0.0f, 0.0f, -0.5f, 0.5f,  -0.5f, 0.0f, 1.0f};
-        unsigned int indices[] = {0, 1, 3, 1, 2, 3};
 
         program = lite::ShaderProgram::load("triangle.vert", "triangle.frag");
         vao = new lite::VertexAttributeObject();

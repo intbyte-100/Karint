@@ -3,7 +3,7 @@
 namespace lite {
 
     void clearScreen(float r, float g, float b, float a, int buffer);
-    void vertexAttribute(int index, int size, int type, bool normalized, int stride, const void *pointer);
+    void vertexAttribute(int index, int size, int type, bool normalized, int stride, const void *position);
     void enableVertexAttributeArray(int index);
     void drawArrays(int type, int first, int count);
     void drawElements(int type, int count, int indecesType, const void *offset);

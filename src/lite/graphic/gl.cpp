@@ -45,8 +45,9 @@ void lite::clearScreen(float r, float g, float b, float a, int buffers){
     glClear(buffers);
 }
 
-void lite::vertexAttribute(int index, int size, int type, bool normalized, int stride, const void *pointer) {
-    glVertexAttribPointer(index, size, type, GL_FALSE, stride, pointer);
+void lite::vertexAttribute(int index, int size, int type, bool normalized, int stride, const void *position)
+{
+    glVertexAttribPointer(index, size, type, GL_FALSE, stride, position);
 }
 
 void lite::enableVertexAttributeArray(int index) {

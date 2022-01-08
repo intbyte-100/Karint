@@ -36,7 +36,9 @@ set(ENGINE_SOURCE
 add_executable(LiteEngine main.cpp ${ENGINE_SOURCE})
 
 find_package(glm REQUIRED)
-target_link_libraries("${PROJECT_NAME}" glm)
+include_directories(${GLM_INCLUDE_DIRS})
+link_directories(${GLM_LIBRARY_DIRS})
+add_definitions(${GLM_DEFINITIONS})
 
 # GLFW
 find_package(glfw3 3.3 REQUIRED)
