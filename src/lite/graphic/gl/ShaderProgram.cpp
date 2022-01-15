@@ -1,7 +1,7 @@
 #include "ShaderProgram.h"
 #include <fstream>
-#include <glad/glad.h>
-#include <lite/util/LiteException.h>
+#include "glad/glad.h"
+#include "lite/util/LiteException.h"
 #include <sstream>
 #include <string>
 

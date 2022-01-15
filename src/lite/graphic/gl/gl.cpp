@@ -1,6 +1,5 @@
 #include "gl.h"
-#include <glad/glad.h>
-
+#include "glad/glad.h"
 
 const int lite::COLOR_BUFFER = GL_COLOR_BUFFER_BIT;
 const int lite::DEPTH_BUFFER = GL_DEPTH_BUFFER_BIT;

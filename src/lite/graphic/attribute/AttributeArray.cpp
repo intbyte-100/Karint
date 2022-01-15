@@ -1,12 +1,12 @@
 #include "AttributeArray.h"
-#include "../gl.h"
+#include "lite/graphic/gl/gl.h"
 #include "glad/glad.h"
 #include <iostream>
 
 void lite::AttributeArray::enable()
 {
     int attributeIndex = 0;
-    for (Attribute &i : attributes) {
+    for (Attribute i : attributes) {
         long position = i.position;
         lite::vertexAttribute(attributeIndex, i.size, i.type, false, layerSize, (void *) position);
         lite::enableVertexAttributeArray(attributeIndex++);

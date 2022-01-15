@@ -1,5 +1,5 @@
 #include "VertexBufferObject.h"
-#include <glad/glad.h>
+#include "glad/glad.h"
 #include <iostream>
 
 lite::VertexBufferObject::VertexBufferObject(float *vertices, int size)
