@@ -10,7 +10,7 @@ ___
 
 ## Credits
 
-* App development - [intbyte](https://github.com/intbyte-100)
+* Programming - [intbyte](https://github.com/intbyte-100)
 * Beautiful [README.md](README.md) - [Kirbo](https://github.com/Kirbo) (Recursion :D)
 
 ## Links
