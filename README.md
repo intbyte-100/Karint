@@ -2,4 +2,17 @@
 
 Lite Engine is a simple little engine written using c++ and opengl
 
-<img src="./screenshots/1.png" width="100px"/>
+___
+
+<img src="./screenshots/1.png" width="300px"/>
+
+___
+
+## Credits
+
+* App development - [Ibragim](https://github.com/intbyte-100)
+* Beautiful [README.md](README.md) - [Kirbo](https://github.com/Kirbo) (Recursion :D)
+
+## Links
+
+- [intbyte company VK](https://vk.com/public198534844)
