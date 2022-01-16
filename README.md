@@ -11,7 +11,7 @@ ___
 ## Credits
 
 * Programming - [intbyte](https://github.com/intbyte-100)
-* Beautiful [README.md](README.md) - [Kirbo](https://github.com/Kirbo) (Recursion :D)
+* Beautiful [README.md](README.md) - [Kirbo](https://github.com/KirboGames) (Recursion :D)
 
 ## Links
 
