@@ -40,8 +40,8 @@ lite::Texture lite::Texture::load(const std::string &file) {
     int channels;
     auto *image = stbi_load(file.c_str(), &width, &height, &channels, 0);
 
-    if (image == 0) {
-        throw new FileNotFoundException("file " + file + " is not found");
+    if (image == nullptr) {
+        throw FileNotFoundException("file " + file + " is not found");
     }
 
     Texture texture;
@@ -54,8 +54,8 @@ lite::Texture lite::Texture::load(const std::string &file) {
 
     texture.setParameter(TEXTURE_WRAP_X, REPEAT);
     texture.setParameter(TEXTURE_WRAP_Y, REPEAT);
-    texture.setParameter(TEXTURE_MIN_FILTER, LINEAR_MIPMAP_LINEAR);
-    texture.setParameter(TEXTURE_MAG_FILTER, LINEAR);
+    texture.setParameter(TEXTURE_MIN_FILTER, LINEAR_MIPMAP_NEAREST);
+    texture.setParameter(TEXTURE_MAG_FILTER, NEAREST);
 
     texture.generateMipmap();
     stbi_image_free(image);

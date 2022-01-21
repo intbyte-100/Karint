@@ -74,6 +74,7 @@ lite::ShaderProgram *lite::ShaderProgram::load(const std::string &vertex, const 
     std::stringstream vShaderStream, fShaderStream;
 
     file.open(vertex);
+
     vShaderStream << file.rdbuf();
     file.close();
 

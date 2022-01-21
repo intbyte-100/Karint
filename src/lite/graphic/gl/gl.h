@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 namespace lite {
 
     void clearScreen(float r, float g, float b, float a, int buffer);
@@ -9,6 +11,8 @@ namespace lite {
     void drawElements(int type, int count, int indecesType, const void *offset);
     void activeTexture(char index);
     void enable(int option);
+
+    std::string getBackendInfo();
 
     extern const int COLOR_BUFFER;
     extern const int DEPTH_BUFFER;

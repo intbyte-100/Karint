@@ -11,8 +11,7 @@ void lite::PerspectiveCamera::update() {
 }
 
 glm::mat4 lite::PerspectiveCamera::getProjection() {
-    glm::mat4 matrix = projection * view;
-    return matrix;
+    return projection;
 }
 
 lite::PerspectiveCamera::PerspectiveCamera(float far, float near, float viewAngle) {

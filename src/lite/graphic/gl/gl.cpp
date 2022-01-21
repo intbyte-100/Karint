@@ -1,3 +1,4 @@
+#include <sstream>
 #include "gl.h"
 #include "glad/glad.h"
 
@@ -70,4 +71,19 @@ void lite::activeTexture(char index)
 void lite::enable(int option)
 {
     glEnable(option);
+}
+
+std::string lite::getBackendInfo() {
+    const GLubyte *renderer = glGetString(GL_RENDERER);
+    const GLubyte *vendor = glGetString(GL_VENDOR);
+    const GLubyte *version = glGetString(GL_VERSION);
+    const GLubyte *glslVersion = glGetString(GL_SHADING_LANGUAGE_VERSION);
+
+    std::ostringstream string;
+    string << "OpenGL Vendor: " << vendor << "\n";
+    string << "OpenGL Renderer: " << renderer << "\n";
+    string << "OpenGL Version: " << version << "\n";
+    string << "GLSL version: " << glslVersion;
+
+    return string.str();
 }
