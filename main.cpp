@@ -1,4 +1,3 @@
-#include "glm/glm.hpp"
 #include <glm/gtc/matrix_transform.hpp>
 #include <lite/desktop/DesktopApplication.h>
 #include <lite/desktop/lite.h>
@@ -60,8 +59,8 @@ class TestApp : public lite::Application {
         vbo->draw(lite::gl::STATIC_DRAW);
 
         std::vector<attribute::Attribute> array{
-            *attribute::POSITION,
-            *attribute::TEXTURE_2D
+            attribute::POSITION,
+            attribute::TEXTURE_2D
         };
 
         vao->enable(array);
@@ -118,7 +117,6 @@ public:
 };
 
 int main() {
-
     lite::init();
     lite::DesktopApplication(new TestApp, 800, 480, "lite engine").start();
     lite::terminate();

@@ -5,24 +5,17 @@
 
 namespace lite{
     namespace attribute {
-        class Attribute {
-        public:
-            short count, type, size;
-            Attribute(short count, short type, short size){
-                this->count = count;
-                this->type = type;
-                this->size = size;
-            }
-        };
+        typedef int Attribute;
 
-        /** the first argument is a count of elements,
-            the second argument is an element Attribute, which compute by subtraction of Attribute and GL_BYTE,
-            the third argument is a Attribute size
+        /** the first non zero digit is a count of elements,
+            the second non zero digit is an element Attribute, which compute by subtraction of Attribute and GL_BYTE,
+            the third non zero digit is a Attribute type size
         **/
-        extern Attribute* RGB;
-        extern Attribute* RGBA;
-        extern Attribute* POSITION;
-        extern Attribute* TEXTURE_2D;
+
+        constexpr Attribute RGB = 0x030604;
+        constexpr Attribute RGBA = 0x040604;
+        constexpr Attribute POSITION = 0x030604;
+        constexpr Attribute TEXTURE_2D = 0x020604;
     }
 
     class VertexAttributeObject {
@@ -32,7 +25,7 @@ namespace lite{
         VertexAttributeObject();
         void enable(attribute::Attribute attribute);
         void enable(std::vector<attribute::Attribute> &attributes);
-        void use();
+        void use() const;
         void dispose();
     };
 }
