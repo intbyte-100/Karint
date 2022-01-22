@@ -11,6 +11,7 @@ lite::DesktopApplication::~DesktopApplication()
 {
     window->close();
     delete window;
+    delete application;
 }
 
 bool lite::DesktopApplication::shouldTerminate() {

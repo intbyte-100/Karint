@@ -4,6 +4,7 @@
 #include "stb_image.h"
 
 #include "lite/util/FileNotFoundException.h"
+#include "gl.h"
 
 void lite::Texture::dispose() {
     glDeleteTextures(1, &id);
@@ -27,7 +28,7 @@ void lite::Texture::bind() {
 
 void lite::Texture::bind(char activeTextureIndex) {
     bind();
-    activeTexture(activeTextureIndex);
+    gl::activeTexture(activeTextureIndex);
 }
 
 void lite::Texture::create() {
@@ -52,10 +53,10 @@ lite::Texture lite::Texture::load(const std::string &file) {
 
     texture.setImage(0, channels, channels, width, height, image);
 
-    texture.setParameter(TEXTURE_WRAP_X, REPEAT);
-    texture.setParameter(TEXTURE_WRAP_Y, REPEAT);
-    texture.setParameter(TEXTURE_MIN_FILTER, LINEAR_MIPMAP_NEAREST);
-    texture.setParameter(TEXTURE_MAG_FILTER, NEAREST);
+    texture.setParameter(gl::TEXTURE_WRAP_X, gl::REPEAT);
+    texture.setParameter(gl::TEXTURE_WRAP_Y, gl::REPEAT);
+    texture.setParameter(gl::TEXTURE_MIN_FILTER, gl::LINEAR_MIPMAP_NEAREST);
+    texture.setParameter(gl::TEXTURE_MAG_FILTER, gl::NEAREST);
 
     texture.generateMipmap();
     stbi_image_free(image);

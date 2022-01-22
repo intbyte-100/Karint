@@ -11,6 +11,9 @@
 #include "lite/graphic/gl/gl.h"
 #include "lite/graphic/PerspectiveCamera.h"
 
+
+using namespace lite;
+
 class TestApp : public lite::Application {
     lite::ShaderProgram *program;
     lite::VertexBufferObject *vbo;
@@ -23,7 +26,7 @@ class TestApp : public lite::Application {
     lite::PerspectiveCamera camera;
 
     void onCreate() override {
-        std::cout << lite::getBackendInfo() << "\n";
+        std::cout << lite::gl::getBackendInfo() << "\n";
 
         float vertices[] = {-0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 0.5f, 0.5f, -0.5f, 1.0f,
                             1.0f,
@@ -50,21 +53,21 @@ class TestApp : public lite::Application {
                             0.5f, 0.5f, 0.5f, 1.0f, 0.0f, -0.5f, 0.5f, 0.5f, 0.0f, 0.0f, -0.5f, 0.5f, -0.5f, 0.0f,
                             1.0f};
 
-        program = lite::ShaderProgram::load("triangle.vert", "triangle.frag");
-        vao = new lite::VertexAttributeObject();
-        vbo = new lite::VertexBufferObject(vertices, sizeof(vertices));
+        program = ShaderProgram::load("triangle.vert", "triangle.frag");
+        vao = new VertexAttributeObject();
+        vbo = new VertexBufferObject(vertices, sizeof(vertices));
         vao->use();
-        vbo->draw(lite::STATIC_DRAW);
+        vbo->draw(lite::gl::STATIC_DRAW);
 
-        std::vector<lite::attribute::Attribute> array{
-            *lite::attribute::POSITION,
-            *lite::attribute::TEXTURE_2D
+        std::vector<attribute::Attribute> array{
+            *attribute::POSITION,
+            *attribute::TEXTURE_2D
         };
 
         vao->enable(array);
 
-        texture = lite::Texture::load("stone.jpeg");
-        texture2 = lite::Texture::load("stone.jpeg");
+        texture = Texture::load("stone.jpeg");
+        texture2 = Texture::load("stone.jpeg");
         projectionUniform = program->getUniform("projection");
         modelUniform = program->getUniform("model");
 
@@ -72,14 +75,14 @@ class TestApp : public lite::Application {
         program->getUniform("texture1").setInt(0);
         program->getUniform("texture2").setInt(1);
 
-        camera = lite::PerspectiveCamera(100, 0.1f, 45);
+        camera = PerspectiveCamera(100, 0.1f, 45);
         camera.position = glm::vec3(1.0f, 4.0f, 6.0f);
         camera.direction = glm::vec3(1.0f, 0.0f, -1.0f);
     }
 
     void render() override {
-        lite::enable(lite::DEPTH_TEST);
-        lite::clearScreen(135 / 255.0f, 206 / 255.0f, 235 /255.0f, 1.0, lite::COLOR_BUFFER | lite::DEPTH_BUFFER);
+        gl::enable(lite::gl::DEPTH_TEST);
+        gl::clearScreen(135 / 255.0f, 206 / 255.0f, 235 / 255.0f, 1.0, lite::gl::COLOR_BUFFER | lite::gl::DEPTH_BUFFER);
 
         int width, height;
         lite::Window::getCurrent()->getSize(&width, &height);
@@ -92,8 +95,6 @@ class TestApp : public lite::Application {
 
         for (int x = -1; x < 4; ++x) {
             for (int y = 0; y < 3; ++y) {
-
-
                 glm::mat4 proj = camera.getProjection();
                 glm::mat4 model = glm::mat4(1.0f);
                 model = glm::translate(model, glm::vec3(x, 0, y));
@@ -102,7 +103,7 @@ class TestApp : public lite::Application {
                 modelUniform.setMatrix(model, false);
 
                 vao->use();
-                lite::drawArrays(lite::TRIANGLE, 0, 36);
+                gl::drawArrays(lite::gl::TRIANGLE, 0, 36);
             }
         }
     }
@@ -113,17 +114,13 @@ public:
         delete vao;
         delete ebo;
         delete program;
-        texture.dispose();
-        texture2.dispose();
     }
 };
 
 int main() {
 
     lite::init();
-    auto *app = new TestApp;
-    lite::DesktopApplication(app, 800, 480, "lite engine").start();
-    delete app;
+    lite::DesktopApplication(new TestApp, 800, 480, "lite engine").start();
     lite::terminate();
     return 0;
 }
