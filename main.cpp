@@ -7,7 +7,6 @@
 #include "lite/graphic/gl/Texture.h"
 #include "lite/graphic/gl/VertexAttributeObject.h"
 #include "lite/graphic/gl/VertexBufferObject.h"
-#include <lite/graphic/attribute/AttributeArray.h>
 #include <iostream>
 #include "lite/graphic/gl/gl.h"
 #include "lite/graphic/PerspectiveCamera.h"
@@ -25,7 +24,7 @@ class TestApp : public lite::Application {
 
     void onCreate() override {
         std::cout << lite::getBackendInfo() << "\n";
-        
+
         float vertices[] = {-0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 0.5f, 0.5f, -0.5f, 1.0f,
                             1.0f,
                             0.5f, 0.5f, -0.5f, 1.0f, 1.0f, -0.5f, 0.5f, -0.5f, 0.0f, 1.0f, -0.5f, -0.5f, -0.5f, 0.0f,
@@ -57,10 +56,12 @@ class TestApp : public lite::Application {
         vao->use();
         vbo->draw(lite::STATIC_DRAW);
 
-        lite::AttributeArray attributeArray;
-        attributeArray.add(lite::POSITION_ATTRIBUTE);
-        attributeArray.add(lite::TEXTURE_2D_ATTRIBUTE);
-        attributeArray.enable();
+        std::vector<lite::attribute::Attribute> array{
+            *lite::attribute::POSITION,
+            *lite::attribute::TEXTURE_2D
+        };
+
+        vao->enable(array);
 
         texture = lite::Texture::load("stone.jpeg");
         texture2 = lite::Texture::load("stone.jpeg");

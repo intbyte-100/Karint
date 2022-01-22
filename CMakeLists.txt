@@ -2,17 +2,17 @@ cmake_minimum_required(VERSION 2.19)
 project(LiteEngine)
 
 set(CMAKE_CXX_STANDARD 14)
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON )
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 
 set(ENGINE_SOURCE
-    src/lite/desktop/Window.cpp
-    src/lite/util/LiteException.h
+        src/lite/desktop/Window.cpp
+        src/lite/util/LiteException.h
         src/lite/graphic/gl/gl.cpp
-    src/lite/desktop/DesktopApplication.cpp
-    src/lite/desktop/lite.cpp src/lite/Application.h
-    src/lite/desktop/DesktopApplication.h
-    src/lite/desktop/lite.h src/lite/desktop/Window.h
+        src/lite/desktop/DesktopApplication.cpp
+        src/lite/desktop/lite.cpp src/lite/Application.h
+        src/lite/desktop/DesktopApplication.h
+        src/lite/desktop/lite.h src/lite/desktop/Window.h
         src/lite/graphic/gl/gl.h
         src/lite/graphic/gl/VertexBufferObject.cpp
         src/lite/graphic/gl/VertexBufferObject.h
@@ -26,12 +26,9 @@ set(ENGINE_SOURCE
         src/lite/graphic/gl/Uniform.cpp
         src/lite/graphic/gl/Texture.h
         src/lite/graphic/gl/Texture.cpp
-    src/lite/util/FileNotFoundException.h
-    src/lite/graphic/attribute/PositionAttribute.h
-    src/lite/graphic/attribute/AttributeArray.h
-    src/lite/graphic/attribute/AttributeArray.cpp
-    src/lite/graphic/attribute/ColorAttribute.h
-        src/lite/graphic/PerspectiveCamera.cpp src/lite/graphic/PerspectiveCamera.h)
+        src/lite/util/FileNotFoundException.h
+        src/lite/graphic/PerspectiveCamera.cpp
+        src/lite/graphic/PerspectiveCamera.h)
 
 add_executable(LiteEngine main.cpp ${ENGINE_SOURCE})
 

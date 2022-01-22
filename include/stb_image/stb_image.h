@@ -398,7 +398,7 @@ extern "C" {
 
 //////////////////////////////////////////////////////////////////////////////
 //
-// PRIMARY API - works on images of any type
+// PRIMARY API - works on images of any Attribute
 //
 
 //
@@ -745,7 +745,7 @@ static int stbi__cpuid3(void)
 }
 #endif
 
-#define STBI_SIMD_ALIGN(type, name) __declspec(align(16)) type name
+#define STBI_SIMD_ALIGN(Attribute, name) __declspec(align(16)) Attribute name
 
 #if !defined(STBI_NO_JPEG) && defined(STBI_SSE2)
 static int stbi__sse2_available(void)
@@ -756,7 +756,7 @@ static int stbi__sse2_available(void)
 #endif
 
 #else // assume GCC-style if not VC++
-#define STBI_SIMD_ALIGN(type, name) type name __attribute__((aligned(16)))
+#define STBI_SIMD_ALIGN(Attribute, name) Attribute name __attribute__((aligned(16)))
 
 #if !defined(STBI_NO_JPEG) && defined(STBI_SSE2)
 static int stbi__sse2_available(void)
@@ -779,14 +779,14 @@ static int stbi__sse2_available(void)
 #ifdef STBI_NEON
 #include <arm_neon.h>
 #ifdef _MSC_VER
-#define STBI_SIMD_ALIGN(type, name) __declspec(align(16)) type name
+#define STBI_SIMD_ALIGN(Attribute, name) __declspec(align(16)) Attribute name
 #else
-#define STBI_SIMD_ALIGN(type, name) type name __attribute__((aligned(16)))
+#define STBI_SIMD_ALIGN(Attribute, name) Attribute name __attribute__((aligned(16)))
 #endif
 #endif
 
 #ifndef STBI_SIMD_ALIGN
-#define STBI_SIMD_ALIGN(type, name) type name
+#define STBI_SIMD_ALIGN(Attribute, name) Attribute name
 #endif
 
 #ifndef STBI_MAX_DIMENSIONS
@@ -1164,7 +1164,7 @@ static void *stbi__load_main(stbi__context *s, int *x, int *y, int *comp, int re
       return stbi__tga_load(s,x,y,comp,req_comp, ri);
    #endif
 
-   return stbi__errpuc("unknown image type", "Image not of any known type, or corrupt");
+   return stbi__errpuc("unknown image Attribute", "Image not of any known Attribute, or corrupt");
 }
 
 static stbi_uc *stbi__convert_16_to_8(stbi__uint16 *orig, int w, int h, int channels)
@@ -1452,7 +1452,7 @@ static float *stbi__loadf_main(stbi__context *s, int *x, int *y, int *comp, int 
    data = stbi__load_and_postprocess_8bit(s, x, y, comp, req_comp);
    if (data)
       return stbi__ldr_to_hdr(data, *x, *y, req_comp ? req_comp : *comp);
-   return stbi__errpf("unknown image type", "Image not of any known type, or corrupt");
+   return stbi__errpf("unknown image Attribute", "Image not of any known Attribute, or corrupt");
 }
 
 STBIDEF float *stbi_loadf_from_memory(stbi_uc const *buffer, int len, int *x, int *y, int *comp, int req_comp)
@@ -3080,7 +3080,7 @@ static int stbi__process_marker(stbi__jpeg *z, int m)
             int q = stbi__get8(z->s);
             int p = q >> 4, sixteen = (p != 0);
             int t = q & 15,i;
-            if (p != 0 && p != 1) return stbi__err("bad DQT type","Corrupt JPEG");
+            if (p != 0 && p != 1) return stbi__err("bad DQT Attribute","Corrupt JPEG");
             if (t > 3) return stbi__err("bad DQT table","Corrupt JPEG");
 
             for (i=0; i < 64; ++i)
@@ -4403,20 +4403,20 @@ Init algorithm:
 
 static int stbi__parse_zlib(stbi__zbuf *a, int parse_header)
 {
-   int final, type;
+   int final, Attribute;
    if (parse_header)
       if (!stbi__parse_zlib_header(a)) return 0;
    a->num_bits = 0;
    a->code_buffer = 0;
    do {
       final = stbi__zreceive(a,1);
-      type = stbi__zreceive(a,2);
-      if (type == 0) {
+      Attribute = stbi__zreceive(a,2);
+      if (Attribute == 0) {
          if (!stbi__parse_uncompressed_block(a)) return 0;
-      } else if (type == 3) {
+      } else if (Attribute == 3) {
          return 0;
       } else {
-         if (type == 1) {
+         if (Attribute == 1) {
             // use fixed code lengths
             if (!stbi__zbuild_huffman(&a->z_length  , stbi__zdefault_length  , STBI__ZNSYMS)) return 0;
             if (!stbi__zbuild_huffman(&a->z_distance, stbi__zdefault_distance,  32)) return 0;
@@ -4529,14 +4529,14 @@ STBIDEF int stbi_zlib_decode_noheader_buffer(char *obuffer, int olen, const char
 typedef struct
 {
    stbi__uint32 length;
-   stbi__uint32 type;
+   stbi__uint32 Attribute;
 } stbi__pngchunk;
 
 static stbi__pngchunk stbi__get_chunk_header(stbi__context *s)
 {
    stbi__pngchunk c;
    c.length = stbi__get32be(s);
-   c.type   = stbi__get32be(s);
+   c.Attribute   = stbi__get32be(s);
    return c;
 }
 
@@ -5039,7 +5039,7 @@ static int stbi__parse_png_file(stbi__png *z, int scan, int req_comp)
 
    for (;;) {
       stbi__pngchunk c = stbi__get_chunk_header(s);
-      switch (c.type) {
+      switch (c.Attribute) {
          case STBI__PNG_TYPE('C','g','B','I'):
             is_iphone = 1;
             stbi__skip(s, c.length);
@@ -5177,16 +5177,16 @@ static int stbi__parse_png_file(stbi__png *z, int scan, int req_comp)
          default:
             // if critical, fail
             if (first) return stbi__err("first not IHDR", "Corrupt PNG");
-            if ((c.type & (1 << 29)) == 0) {
+            if ((c.Attribute & (1 << 29)) == 0) {
                #ifndef STBI_NO_FAILURE_STRINGS
                // not threadsafe
                static char invalid_chunk[] = "XXXX PNG chunk not known";
-               invalid_chunk[0] = STBI__BYTECAST(c.type >> 24);
-               invalid_chunk[1] = STBI__BYTECAST(c.type >> 16);
-               invalid_chunk[2] = STBI__BYTECAST(c.type >>  8);
-               invalid_chunk[3] = STBI__BYTECAST(c.type >>  0);
+               invalid_chunk[0] = STBI__BYTECAST(c.Attribute >> 24);
+               invalid_chunk[1] = STBI__BYTECAST(c.Attribute >> 16);
+               invalid_chunk[2] = STBI__BYTECAST(c.Attribute >>  8);
+               invalid_chunk[3] = STBI__BYTECAST(c.Attribute >>  0);
                #endif
-               return stbi__err(invalid_chunk, "PNG not supported: unknown PNG chunk type");
+               return stbi__err(invalid_chunk, "PNG not supported: unknown PNG chunk Attribute");
             }
             stbi__skip(s, c.length);
             break;
@@ -5395,7 +5395,7 @@ static void *stbi__bmp_parse_header(stbi__context *s, stbi__bmp_data *info)
 
    if (info->offset < 0) return stbi__errpuc("bad BMP", "bad BMP");
 
-   if (hsz != 12 && hsz != 40 && hsz != 56 && hsz != 108 && hsz != 124) return stbi__errpuc("unknown BMP", "BMP type not supported: unknown");
+   if (hsz != 12 && hsz != 40 && hsz != 56 && hsz != 108 && hsz != 124) return stbi__errpuc("unknown BMP", "BMP Attribute not supported: unknown");
    if (hsz == 12) {
       s->img_x = stbi__get16le(s);
       s->img_y = stbi__get16le(s);
@@ -5407,8 +5407,8 @@ static void *stbi__bmp_parse_header(stbi__context *s, stbi__bmp_data *info)
    info->bpp = stbi__get16le(s);
    if (hsz != 12) {
       int compress = stbi__get32le(s);
-      if (compress == 1 || compress == 2) return stbi__errpuc("BMP RLE", "BMP type not supported: RLE");
-      if (compress >= 4) return stbi__errpuc("BMP JPEG/PNG", "BMP type not supported: unsupported compression"); // this includes PNG/JPEG modes
+      if (compress == 1 || compress == 2) return stbi__errpuc("BMP RLE", "BMP Attribute not supported: RLE");
+      if (compress >= 4) return stbi__errpuc("BMP JPEG/PNG", "BMP Attribute not supported: unsupported compression"); // this includes PNG/JPEG modes
       if (compress == 3 && info->bpp != 16 && info->bpp != 32) return stbi__errpuc("bad BMP", "bad BMP"); // bitfields requires 16 or 32 bits/pixel
       stbi__get32le(s); // discard sizeof
       stbi__get32le(s); // discard hres
@@ -5679,12 +5679,12 @@ static int stbi__tga_info(stbi__context *s, int *x, int *y, int *comp)
     int tga_w, tga_h, tga_comp, tga_image_type, tga_bits_per_pixel, tga_colormap_bpp;
     int sz, tga_colormap_type;
     stbi__get8(s);                   // discard Offset
-    tga_colormap_type = stbi__get8(s); // colormap type
+    tga_colormap_type = stbi__get8(s); // colormap Attribute
     if( tga_colormap_type > 1 ) {
         stbi__rewind(s);
         return 0;      // only RGB or indexed allowed
     }
-    tga_image_type = stbi__get8(s); // image type
+    tga_image_type = stbi__get8(s); // image Attribute
     if ( tga_colormap_type == 1 ) { // colormapped (paletted) image
         if (tga_image_type != 1 && tga_image_type != 9) {
             stbi__rewind(s);
@@ -5744,11 +5744,11 @@ static int stbi__tga_test(stbi__context *s)
    int res = 0;
    int sz, tga_color_type;
    stbi__get8(s);      //   discard Offset
-   tga_color_type = stbi__get8(s);   //   color type
+   tga_color_type = stbi__get8(s);   //   color Attribute
    if ( tga_color_type > 1 ) goto errorEnd;   //   only RGB or indexed allowed
-   sz = stbi__get8(s);   //   image type
+   sz = stbi__get8(s);   //   image Attribute
    if ( tga_color_type == 1 ) { // colormapped (paletted) image
-      if (sz != 1 && sz != 9) goto errorEnd; // colortype 1 demands image type 1 or 9
+      if (sz != 1 && sz != 9) goto errorEnd; // colortype 1 demands image Attribute 1 or 9
       stbi__skip(s,4);       // skip index of first colormap entry and number of entries
       sz = stbi__get8(s);    //   check bits per palette color entry
       if ( (sz != 8) && (sz != 15) && (sz != 16) && (sz != 24) && (sz != 32) ) goto errorEnd;
@@ -6059,7 +6059,7 @@ static void *stbi__psd_load(stbi__context *s, int *x, int *y, int *comp, int req
    if (stbi__get32be(s) != 0x38425053)   // "8BPS"
       return stbi__errpuc("not PSD", "Corrupt PSD image");
 
-   // Check file type version.
+   // Check file Attribute version.
    if (stbi__get16be(s) != 1)
       return stbi__errpuc("wrong version", "Unsupported version of PSD image");
 
@@ -6283,7 +6283,7 @@ static int stbi__pic_test_core(stbi__context *s)
 
 typedef struct
 {
-   stbi_uc size,type,channel;
+   stbi_uc size,Attribute,channel;
 } stbi__pic_packet;
 
 static stbi_uc *stbi__readval(stbi__context *s, int channel, stbi_uc *dest)
@@ -6326,7 +6326,7 @@ static stbi_uc *stbi__pic_load_core(stbi__context *s,int width,int height,int *c
 
       chained = stbi__get8(s);
       packet->size    = stbi__get8(s);
-      packet->type    = stbi__get8(s);
+      packet->Attribute    = stbi__get8(s);
       packet->channel = stbi__get8(s);
 
       act_comp |= packet->channel;
@@ -6344,9 +6344,9 @@ static stbi_uc *stbi__pic_load_core(stbi__context *s,int width,int height,int *c
          stbi__pic_packet *packet = &packets[packet_idx];
          stbi_uc *dest = result+y*width*4;
 
-         switch (packet->type) {
+         switch (packet->Attribute) {
             default:
-               return stbi__errpuc("bad format","packet has bad compression type");
+               return stbi__errpuc("bad format","packet has bad compression Attribute");
 
             case 0: {//uncompressed
                int x;
@@ -6963,7 +6963,7 @@ static void *stbi__load_gif_main(stbi__context *s, int **delays, int *x, int *y,
       *z = layers;
       return out;
    } else {
-      return stbi__errpuc("not GIF", "Image was not as a gif type.");
+      return stbi__errpuc("not GIF", "Image was not as a gif Attribute.");
    }
 }
 
@@ -7380,7 +7380,7 @@ static int stbi__pic_info(stbi__context *s, int *x, int *y, int *comp)
       packet = &packets[num_packets++];
       chained = stbi__get8(s);
       packet->size    = stbi__get8(s);
-      packet->type    = stbi__get8(s);
+      packet->Attribute    = stbi__get8(s);
       packet->channel = stbi__get8(s);
       act_comp |= packet->channel;
 
@@ -7577,7 +7577,7 @@ static int stbi__info_main(stbi__context *s, int *x, int *y, int *comp)
    if (stbi__tga_info(s, x, y, comp))
        return 1;
    #endif
-   return stbi__err("unknown image type", "Image not of any known type, or corrupt");
+   return stbi__err("unknown image Attribute", "Image not of any known Attribute, or corrupt");
 }
 
 static int stbi__is_16_main(stbi__context *s)
@@ -7792,7 +7792,7 @@ STBIDEF int stbi_is_16_bit_from_callbacks(stbi_io_callbacks const *c, void *user
       1.24  (2010-07-12)
               perf improvements reading from files on platforms with lock-heavy fgetc()
               minor perf improvements for jpeg
-              deprecated type-specific functions so we'll get feedback if they're needed
+              deprecated Attribute-specific functions so we'll get feedback if they're needed
               attempt to fix trans_data warning (Won Chun)
       1.23    fixed bug in iPhone support
       1.22  (2010-07-10)
@@ -7848,7 +7848,7 @@ STBIDEF int stbi_is_16_bit_from_callbacks(stbi_io_callbacks const *c, void *user
       0.53    fix bug in png 3->4; speedup png decoding
       0.52    png handles req_comp=3,4 directly; minor cleanup; jpeg comments
       0.51    obey req_comp requests, 1-component jpegs return as 1-component,
-              on 'test' only check type, not whether we support this variant
+              on 'test' only check Attribute, not whether we support this variant
       0.50  (2006-11-19)
               first released version
 */
