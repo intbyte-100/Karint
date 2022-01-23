@@ -5,9 +5,13 @@
 #define LITEENGINE_WINDOW_H
 
 namespace lite {
+    class DesktopApplication;
     class Window {
+        friend DesktopApplication;
     private:
         GLFWwindow *window;
+        float deltaTime;
+        float lastTime;
     public:
         Window(const std::string&, int  width, int height);
         void getSize(int *width, int *height);
@@ -17,6 +21,7 @@ namespace lite {
         void dispose();
         void close();
         void makeCurrent();
+        float getDeltaTime() const;
         static Window *getCurrent();
     };
 }

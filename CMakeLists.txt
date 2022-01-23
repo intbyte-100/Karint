@@ -5,6 +5,7 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 
+
 set(ENGINE_SOURCE
         src/lite/desktop/Window.cpp
         src/lite/util/LiteException.h
@@ -28,7 +29,7 @@ set(ENGINE_SOURCE
         src/lite/graphic/gl/Texture.cpp
         src/lite/util/FileNotFoundException.h
         src/lite/graphic/PerspectiveCamera.cpp
-        src/lite/graphic/PerspectiveCamera.h)
+        src/lite/graphic/PerspectiveCamera.h src/lite/input/input.cpp src/lite/input/input.h)
 
 add_executable(LiteEngine main.cpp ${ENGINE_SOURCE})
 

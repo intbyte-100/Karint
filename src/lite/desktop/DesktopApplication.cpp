@@ -21,6 +21,9 @@ bool lite::DesktopApplication::shouldTerminate() {
 void lite::DesktopApplication::start() {
     application->onCreate();
     while (!shouldTerminate()){
+        float currentTime = glfwGetTime();
+        window->deltaTime = currentTime - window->lastTime;
+        window->lastTime = currentTime;
         window->makeCurrent();
         application->render();
         lite::update();

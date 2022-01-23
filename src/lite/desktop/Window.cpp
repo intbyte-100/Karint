@@ -1,6 +1,7 @@
 // clang-format off
 #include <glad/glad.h>
 #include "Window.h"
+#include "lite.h"
 #include <GLFW/glfw3.h>
 #include <lite/util/LiteException.h>
 // clang-format on
@@ -50,7 +51,6 @@ void lite::Window::dispose() {
 
 void lite::Window::close() {
     glfwSetWindowShouldClose(window, true);
-    dispose();
 }
 
 void lite::Window::makeCurrent()
@@ -64,7 +64,14 @@ lite::Window *lite::Window::getCurrent()
 }
 
 bool lite::Window::isPressed(int key) {
-    return glfwGetKey(window, key) == GLFW_PRESS;
+    int state = glfwGetKey(window, key);
+    return state == GLFW_REPEAT || state == GLFW_PRESS;
 }
+
+float lite::Window::getDeltaTime() const {
+    return deltaTime;
+}
+
+
 
 

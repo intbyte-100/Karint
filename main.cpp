@@ -9,6 +9,7 @@
 #include <iostream>
 #include "lite/graphic/gl/gl.h"
 #include "lite/graphic/PerspectiveCamera.h"
+#include "lite/input/input.h"
 
 
 using namespace lite;
@@ -80,6 +81,22 @@ class TestApp : public lite::Application {
     }
 
     void render() override {
+
+        glm::vec3 move(0);
+        if(input::isPressed(input::ESCAPE))
+            Window::getCurrent()->close();
+        if (input::isPressed('W'))
+            move += glm::vec3(0, 0, -1) * Window::getCurrent()->getDeltaTime();
+        else if(input::isPressed('S'))
+            move -= glm::vec3(0, 0, -1) * Window::getCurrent()->getDeltaTime();
+        if(input::isPressed('A'))
+            move -= glm::vec3(1, 0, 0) * Window::getCurrent()->getDeltaTime();
+        else if(input::isPressed('D'))
+            move += glm::vec3(1, 0, 0) * Window::getCurrent()->getDeltaTime();
+        camera.position += move;
+        camera.direction += move;
+
+
         gl::enable(lite::gl::DEPTH_TEST);
         gl::clearScreen(135 / 255.0f, 206 / 255.0f, 235 / 255.0f, 1.0, lite::gl::COLOR_BUFFER | lite::gl::DEPTH_BUFFER);
 
