@@ -4,7 +4,7 @@
 
 
 
-lite::VertexAttributeObject::VertexAttributeObject() {
+void lite::VertexAttributeObject::create() {
     glGenVertexArrays(1, &id);
 }
 

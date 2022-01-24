@@ -22,10 +22,10 @@ namespace lite{
     public:
         unsigned int id;
         ~VertexAttributeObject();
-        VertexAttributeObject();
         void enable(attribute::Attribute attribute);
         void enable(std::vector<attribute::Attribute> &attributes);
         void use() const;
+        void create();
         void dispose();
     };
 }

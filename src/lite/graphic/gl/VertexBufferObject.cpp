@@ -2,19 +2,6 @@
 #include "glad/glad.h"
 #include <iostream>
 
-lite::VertexBufferObject::VertexBufferObject(float *vertices, int size)
-{
-    this->vertices = vertices;
-    this->size = size;
-    glGenBuffers(1, &id);
-}
-
-void lite::VertexBufferObject::draw(unsigned int type)
-{
-    glBindBuffer(GL_ARRAY_BUFFER, id);
-    glBufferData(GL_ARRAY_BUFFER, size * sizeof(float), vertices, type);
-}
-
 void lite::VertexBufferObject::dispose()
 {
     glDeleteBuffers(1, &id);
@@ -22,4 +9,13 @@ void lite::VertexBufferObject::dispose()
 
 lite::VertexBufferObject::~VertexBufferObject() {
     dispose();
+}
+
+void lite::VertexBufferObject::setVertices(float *vertices, int count, unsigned int type) {
+    glBindBuffer(GL_ARRAY_BUFFER, id);
+    glBufferData(GL_ARRAY_BUFFER, count * sizeof(float), vertices, type);
+}
+
+void lite::VertexBufferObject::create() {
+    glGenBuffers(1, &id);
 }

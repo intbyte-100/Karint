@@ -7,10 +7,8 @@ namespace lite {
     public:
         unsigned int id;
         ~VertexBufferObject();
-        int size;
-        float *vertices;
-        VertexBufferObject(float *vertices, int size);
-        void draw(unsigned int type);
+        void create();
+        void setVertices(float *vertices, int count, unsigned int type);
         void dispose();
     };
 }
