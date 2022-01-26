@@ -5,6 +5,7 @@
 lite::DesktopApplication::DesktopApplication(Application *application, int width, int height, std::string title) {
     window = new Window(title, width, height);
     this->application = application;
+    std::cout << "Lite engine has been inited" << std::endl;
 }
 
 lite::DesktopApplication::~DesktopApplication()
@@ -19,12 +20,12 @@ bool lite::DesktopApplication::shouldTerminate() {
 }
 
 void lite::DesktopApplication::start() {
+    window->makeCurrent();
     application->onCreate();
     while (!shouldTerminate()){
         float currentTime = glfwGetTime();
         window->deltaTime = currentTime - window->lastTime;
         window->lastTime = currentTime;
-        window->makeCurrent();
         application->render();
         lite::update();
         window->update();

@@ -22,6 +22,7 @@ namespace lite {
         void close();
         void makeCurrent();
         float getDeltaTime() const;
+        void hideCursor(bool mode);
         static Window *getCurrent();
     };
 }

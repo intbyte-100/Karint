@@ -17,6 +17,10 @@
 using namespace lite;
 
 class TestApp : public lite::Application {
+    float lastX = 400, lastY = 300;
+    bool firstMouse = true;
+    float yaw   = -90.0f;	// yaw is initialized to -90.0 degrees since a yaw of 0.0 results in a direction vector pointing to the right so we initially rotate a bit to the left.
+    float pitch =  0.0f;
     lite::ShaderProgram *program;
     lite::Texture texture;
     lite::Texture texture2;
@@ -57,6 +61,7 @@ class TestApp : public lite::Application {
                 attribute::TEXTURE_2D
         };
 
+
         program = ShaderProgram::load("triangle.vert", "triangle.frag");
 
         renderable.create();
@@ -76,23 +81,66 @@ class TestApp : public lite::Application {
         camera.position = glm::vec3(1.0f, 4.0f, 6.0f);
         camera.direction = glm::vec3(1.0f, 0.0f, -1.0f);
 
+
+        Window::getCurrent()->hideCursor(true);
+
+        input::mouseCallback = [this](double x, double y){
+            float xpos = static_cast<float>(x);
+            float ypos = static_cast<float>(y);
+
+            if (firstMouse)
+            {
+                lastX = xpos;
+                lastY = ypos;
+                firstMouse = false;
+            }
+
+            float xoffset = xpos - lastX;
+            float yoffset = lastY - ypos;
+            lastX = xpos;
+            lastY = ypos;
+
+            float sensitivity = 0.1f;
+            xoffset *= sensitivity;
+            yoffset *= sensitivity;
+
+            yaw += xoffset;
+            pitch += yoffset;
+
+            if (pitch > 89.0f)
+                pitch = 89.0f;
+            if (pitch < -89.0f)
+                pitch = -89.0f;
+
+            glm::vec3 front;
+            front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+            front.y = sin(glm::radians(pitch));
+            front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+            camera.direction = glm::normalize(front);
+        };
     }
 
     void render() override {
 
         glm::vec3 move(0);
+        glm::vec3 velocity(3);
+
         if(input::isPressed(input::ESCAPE))
             Window::getCurrent()->close();
         if (input::isPressed('W'))
-            move += glm::vec3(0, 0, -1) * Window::getCurrent()->getDeltaTime();
+            move += velocity * Window::getCurrent()->getDeltaTime() * camera.direction;
         else if(input::isPressed('S'))
-            move -= glm::vec3(0, 0, -1) * Window::getCurrent()->getDeltaTime();
-        if(input::isPressed('A'))
-            move -= glm::vec3(1, 0, 0) * Window::getCurrent()->getDeltaTime();
-        else if(input::isPressed('D'))
-            move += glm::vec3(1, 0, 0) * Window::getCurrent()->getDeltaTime();
-        camera.position += move;
-        camera.direction += move;
+            move -= velocity * Window::getCurrent()->getDeltaTime() * camera.direction;
+        if(input::isPressed('A')) {
+            velocity *= -glm::cross(camera.direction, glm::vec3(0, 1, 0));
+            move += velocity * Window::getCurrent()->getDeltaTime();
+        }
+        else if(input::isPressed('D')) {
+            velocity *= glm::cross(camera.direction, glm::vec3(0, 1, 0));
+            move += velocity * Window::getCurrent()->getDeltaTime();
+        }
+        move.y = 0;
+        camera.position += move ;
 
 
         gl::enable(gl::DEPTH_TEST);
@@ -108,8 +156,8 @@ class TestApp : public lite::Application {
 
         renderer.use(&camera);
 
-        for (int x = -1; x < 4; ++x) {
-            for (int y = 0; y < 3; ++y) {
+        for (int x = -1; x < 10; ++x) {
+            for (int y = 0; y < 10; ++y) {
                 renderable.model = glm::translate(glm::mat4(1.0f), glm::vec3(x, 0, y));
                 renderer.draw(&renderable);
             }
@@ -124,7 +172,7 @@ public:
 
 int main() {
     lite::init();
-    lite::DesktopApplication(new TestApp, 800, 480, "lite engine").start();
+    lite::DesktopApplication(new TestApp, 800, 600, "lite engine").start();
     lite::terminate();
     return 0;
 }

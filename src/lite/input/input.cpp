@@ -11,3 +11,5 @@ bool lite::input::isPressed(int key) {
     Window *window = Window::getCurrent();
     return window->isPressed(key);
 }
+
+std::function<void(double, double )> lite::input::mouseCallback;

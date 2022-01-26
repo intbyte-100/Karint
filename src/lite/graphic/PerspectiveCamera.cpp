@@ -7,7 +7,7 @@ void lite::PerspectiveCamera::update(int width, int height) {
 }
 
 void lite::PerspectiveCamera::update() {
-    view = glm::lookAt(position, direction, glm::vec3(0.0f, 1.0f, 0.0f));
+    view = glm::lookAt(position, direction + position, glm::vec3(0.0f, 1.0f, 0.0f));
 }
 
 glm::mat4 lite::PerspectiveCamera::getProjection() {

@@ -2,15 +2,21 @@
 #include <glad/glad.h>
 #include "Window.h"
 #include "lite.h"
+#include "lite/input/input.h"
 #include <GLFW/glfw3.h>
 #include <lite/util/LiteException.h>
 // clang-format on
 
 lite::Window *currentWindow;
 
-void framebuffer_size_callback(GLFWwindow *window, int width, int height)
+void framebufferSizeCallback(GLFWwindow *window, int width, int height)
 {
     glViewport(0, 0, width, height);
+}
+
+void mouseCallback(GLFWwindow* window, double x, double y){
+    if(lite::input::mouseCallback)
+        lite::input::mouseCallback(x, y);
 }
 
 lite::Window::Window(const std::string &title, int width, int height){
@@ -27,7 +33,9 @@ lite::Window::Window(const std::string &title, int width, int height){
         throw lite::LiteException("Failed to initialize GLAD");
     }
 
-    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+    glfwSetFramebufferSizeCallback(window, framebufferSizeCallback);
+    glfwSetCursorPosCallback(window, mouseCallback);
+
     glViewport(0, 0, width, height);
 }
 
@@ -70,6 +78,10 @@ bool lite::Window::isPressed(int key) {
 
 float lite::Window::getDeltaTime() const {
     return deltaTime;
+}
+
+void lite::Window::hideCursor(bool mode) {
+    glfwSetInputMode(window, GLFW_CURSOR, mode ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL);
 }
 
 
