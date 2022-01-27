@@ -1,6 +1,6 @@
-# Lite Engine
+# Karint Engine
 
-Lite Engine is a simple little engine written using c++ and opengl
+Karint Engine is a simple little engine written using c++ and opengl
 
 ___
 
