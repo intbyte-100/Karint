@@ -12,21 +12,22 @@
 #include "lite/input/input.h"
 #include "lite/graphic/Renderable.h"
 #include "lite/graphic/Renderer.h"
+#include "lite/math/math.h"
+#include "lite/input/CameraController.h"
 
 
 using namespace lite;
 
 class TestApp : public lite::Application {
-    float lastX = 400, lastY = 300;
-    bool firstMouse = true;
-    float yaw   = -90.0f;	// yaw is initialized to -90.0 degrees since a yaw of 0.0 results in a direction vector pointing to the right so we initially rotate a bit to the left.
-    float pitch =  0.0f;
     lite::ShaderProgram *program;
     lite::Texture texture;
     lite::Texture texture2;
     lite::PerspectiveCamera camera;
     lite::Renderable renderable;
     lite::Renderer renderer;
+    lite::CameraController controller;
+
+    glm::vec3 finalDirection;
 
     void onCreate() override {
         std::cout << lite::gl::getBackendInfo() << "\n";
@@ -84,64 +85,32 @@ class TestApp : public lite::Application {
 
         Window::getCurrent()->hideCursor(true);
 
-        input::mouseCallback = [this](double x, double y){
-            float xpos = static_cast<float>(x);
-            float ypos = static_cast<float>(y);
-
-            if (firstMouse)
-            {
-                lastX = xpos;
-                lastY = ypos;
-                firstMouse = false;
-            }
-
-            float xoffset = xpos - lastX;
-            float yoffset = lastY - ypos;
-            lastX = xpos;
-            lastY = ypos;
-
-            float sensitivity = 0.1f;
-            xoffset *= sensitivity;
-            yoffset *= sensitivity;
-
-            yaw += xoffset;
-            pitch += yoffset;
-
-            if (pitch > 89.0f)
-                pitch = 89.0f;
-            if (pitch < -89.0f)
-                pitch = -89.0f;
-
-            glm::vec3 front;
-            front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
-            front.y = sin(glm::radians(pitch));
-            front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-            camera.direction = glm::normalize(front);
-        };
+        controller.setCamera(&camera);
+        controller.smooth = 0.4f;
+        input::mouseCallback = controller.getMouseCallback();
     }
 
     void render() override {
 
-        glm::vec3 move(0);
-        glm::vec3 velocity(3);
+        controller.update();
+        glm::vec2 move(0);
+        glm::vec2 velocity(3);
 
         if(input::isPressed(input::ESCAPE))
             Window::getCurrent()->close();
         if (input::isPressed('W'))
-            move += velocity * Window::getCurrent()->getDeltaTime() * camera.direction;
+            move += math::rotate(velocity, controller.getYaw()-90);
         else if(input::isPressed('S'))
-            move -= velocity * Window::getCurrent()->getDeltaTime() * camera.direction;
-        if(input::isPressed('A')) {
-            velocity *= -glm::cross(camera.direction, glm::vec3(0, 1, 0));
-            move += velocity * Window::getCurrent()->getDeltaTime();
-        }
-        else if(input::isPressed('D')) {
-            velocity *= glm::cross(camera.direction, glm::vec3(0, 1, 0));
-            move += velocity * Window::getCurrent()->getDeltaTime();
-        }
-        move.y = 0;
-        camera.position += move ;
+            move -= math::rotate(velocity, controller.getYaw()-90);
+        if(input::isPressed('A'))
+            move -= math::rotate(velocity, controller.getYaw());
+        else if(input::isPressed('D'))
+            move += math::rotate(velocity, controller.getYaw());
 
+
+        move*=Window::getCurrent()->getDeltaTime();
+        camera.position.x += move.x;
+        camera.position.z += move.y;
 
         gl::enable(gl::DEPTH_TEST);
         gl::clearScreen(135 / 255.0f, 206 / 255.0f, 235 / 255.0f, 1.0, gl::COLOR_BUFFER | gl::DEPTH_BUFFER);

@@ -34,7 +34,7 @@ set(ENGINE_SOURCE
         src/lite/input/input.cpp
         src/lite/input/input.h
         src/lite/graphic/Renderable.h
-        src/lite/graphic/Renderer.cpp src/lite/graphic/Renderer.h)
+        src/lite/graphic/Renderer.cpp src/lite/graphic/Renderer.h src/lite/math/math.cpp src/lite/math/math.h src/lite/input/CameraController.cpp src/lite/input/CameraController.h)
 
 add_executable(LiteEngine main.cpp ${ENGINE_SOURCE})
 
