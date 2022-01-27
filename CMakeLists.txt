@@ -1,42 +1,47 @@
 cmake_minimum_required(VERSION 2.19)
-project(LiteEngine)
+project(KarintEngine)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 
 set(ENGINE_SOURCE
-        src/lite/desktop/Window.cpp
-        src/lite/util/LiteException.h
-        src/lite/graphic/gl/gl.cpp
-        src/lite/desktop/DesktopApplication.cpp
-        src/lite/desktop/lite.cpp
-        src/lite/Application.h
-        src/lite/desktop/DesktopApplication.h
-        src/lite/desktop/lite.h
-        src/lite/desktop/Window.h
-        src/lite/graphic/gl/gl.h
-        src/lite/graphic/gl/VertexBufferObject.cpp
-        src/lite/graphic/gl/VertexBufferObject.h
-        src/lite/graphic/gl/ShaderProgram.cpp
-        src/lite/graphic/gl/ShaderProgram.h
-        src/lite/graphic/gl/VertexAttributeObject.cpp
-        src/lite/graphic/gl/VertexAttributeObject.h
-        src/lite/graphic/gl/ElementBufferObject.h
-        src/lite/graphic/gl/ElementBufferObject.cpp
-        src/lite/graphic/gl/Uniform.h
-        src/lite/graphic/gl/Uniform.cpp
-        src/lite/graphic/gl/Texture.h
-        src/lite/graphic/gl/Texture.cpp
-        src/lite/util/FileNotFoundException.h
-        src/lite/graphic/PerspectiveCamera.cpp
-        src/lite/graphic/PerspectiveCamera.h
-        src/lite/input/input.cpp
-        src/lite/input/input.h
-        src/lite/graphic/Renderable.h
-        src/lite/graphic/Renderer.cpp src/lite/graphic/Renderer.h src/lite/math/math.cpp src/lite/math/math.h src/lite/input/CameraController.cpp src/lite/input/CameraController.h)
+        src/karint/desktop/Window.cpp
+        src/karint/util/KarintException.h
+        src/karint/graphic/gl/gl.cpp
+        src/karint/desktop/DesktopApplication.cpp
+        src/karint/desktop/karint.cpp
+        src/karint/Application.h
+        src/karint/desktop/DesktopApplication.h
+        src/karint/desktop/karint.h
+        src/karint/desktop/Window.h
+        src/karint/graphic/gl/gl.h
+        src/karint/graphic/gl/VertexBufferObject.cpp
+        src/karint/graphic/gl/VertexBufferObject.h
+        src/karint/graphic/gl/ShaderProgram.cpp
+        src/karint/graphic/gl/ShaderProgram.h
+        src/karint/graphic/gl/VertexAttributeObject.cpp
+        src/karint/graphic/gl/VertexAttributeObject.h
+        src/karint/graphic/gl/ElementBufferObject.h
+        src/karint/graphic/gl/ElementBufferObject.cpp
+        src/karint/graphic/gl/Uniform.h
+        src/karint/graphic/gl/Uniform.cpp
+        src/karint/graphic/gl/Texture.h
+        src/karint/graphic/gl/Texture.cpp
+        src/karint/util/FileNotFoundException.h
+        src/karint/graphic/PerspectiveCamera.cpp
+        src/karint/graphic/PerspectiveCamera.h
+        src/karint/input/input.cpp
+        src/karint/input/input.h
+        src/karint/graphic/Renderable.h
+        src/karint/graphic/Renderer.cpp
+        src/karint/graphic/Renderer.h
+        src/karint/math/math.cpp
+        src/karint/math/math.h
+        src/karint/input/CameraController.cpp
+        src/karint/input/CameraController.h)
 
-add_executable(LiteEngine main.cpp ${ENGINE_SOURCE})
+add_executable(KarintEngine main.cpp ${ENGINE_SOURCE})
 
 find_package(glm REQUIRED)
 include_directories(${GLM_INCLUDE_DIRS})

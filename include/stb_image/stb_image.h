@@ -4033,7 +4033,7 @@ static int stbi__jpeg_info(stbi__context *s, int *x, int *y, int *comp)
 // fast-way is faster to check than jpeg huffman, but slow way is slower
 #define STBI__ZFAST_BITS  9 // accelerate all cases in default tables
 #define STBI__ZFAST_MASK  ((1 << STBI__ZFAST_BITS) - 1)
-#define STBI__ZNSYMS 288 // number of symbols in literal/length alphabet
+#define STBI__ZNSYMS 288 // number of symbols in karintral/length alphabet
 
 // zlib-style huffman encoding
 // (jpegs packs from left, zlib from right, so can't share code)
@@ -6017,7 +6017,7 @@ static int stbi__psd_decode_rle(stbi__context *s, stbi_uc *p, int pixelCount)
       if (len == 128) {
          // No-op.
       } else if (len < 128) {
-         // Copy next len+1 bytes literally.
+         // Copy next len+1 bytes karintrally.
          len++;
          if (len > nleft) return 0; // corrupt data
          count += len;
@@ -6136,7 +6136,7 @@ static void *stbi__psd_load(stbi__context *s, int *x, int *y, int *comp, int req
       // RLE as used by .PSD and .TIFF
       // Loop until you get the number of unpacked bytes you are expecting:
       //     Read the next source byte into n.
-      //     If n is between 0 and 127 inclusive, copy the next n+1 bytes literally.
+      //     If n is between 0 and 127 inclusive, copy the next n+1 bytes karintrally.
       //     Else if n is between -127 and -1 inclusive, copy the next byte -n+1 times.
       //     Else if n is 128, noop.
       // Endloop

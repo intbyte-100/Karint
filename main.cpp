@@ -1,36 +1,36 @@
 #include <glm/gtc/matrix_transform.hpp>
-#include <lite/desktop/DesktopApplication.h>
-#include <lite/desktop/lite.h>
-#include "lite/graphic/gl/ElementBufferObject.h"
-#include "lite/graphic/gl/ShaderProgram.h"
-#include "lite/graphic/gl/Texture.h"
-#include "lite/graphic/gl/VertexAttributeObject.h"
-#include "lite/graphic/gl/VertexBufferObject.h"
+#include <karint/desktop/DesktopApplication.h>
+#include <karint/desktop/karint.h>
+#include "karint/graphic/gl/ElementBufferObject.h"
+#include "karint/graphic/gl/ShaderProgram.h"
+#include "karint/graphic/gl/Texture.h"
+#include "karint/graphic/gl/VertexAttributeObject.h"
+#include "karint/graphic/gl/VertexBufferObject.h"
 #include <iostream>
-#include "lite/graphic/gl/gl.h"
-#include "lite/graphic/PerspectiveCamera.h"
-#include "lite/input/input.h"
-#include "lite/graphic/Renderable.h"
-#include "lite/graphic/Renderer.h"
-#include "lite/math/math.h"
-#include "lite/input/CameraController.h"
+#include "karint/graphic/gl/gl.h"
+#include "karint/graphic/PerspectiveCamera.h"
+#include "karint/input/input.h"
+#include "karint/graphic/Renderable.h"
+#include "karint/graphic/Renderer.h"
+#include "karint/math/math.h"
+#include "karint/input/CameraController.h"
 
 
-using namespace lite;
+using namespace karint;
 
-class TestApp : public lite::Application {
-    lite::ShaderProgram *program;
-    lite::Texture texture;
-    lite::Texture texture2;
-    lite::PerspectiveCamera camera;
-    lite::Renderable renderable;
-    lite::Renderer renderer;
-    lite::CameraController controller;
+class TestApp : public karint::Application {
+    karint::ShaderProgram *program;
+    karint::Texture texture;
+    karint::Texture texture2;
+    karint::PerspectiveCamera camera;
+    karint::Renderable renderable;
+    karint::Renderer renderer;
+    karint::CameraController controller;
 
     glm::vec3 finalDirection;
 
     void onCreate() override {
-        std::cout << lite::gl::getBackendInfo() << "\n";
+        std::cout << karint::gl::getBackendInfo() << "\n";
 
         float vertices[] = {-0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 0.5f, 0.5f, -0.5f, 1.0f,
                             1.0f,
@@ -86,7 +86,7 @@ class TestApp : public lite::Application {
         Window::getCurrent()->hideCursor(true);
 
         controller.setCamera(&camera);
-        controller.smooth = 0.4f;
+        controller.smooth = 0.6f;
         input::mouseCallback = controller.getMouseCallback();
     }
 
@@ -116,7 +116,7 @@ class TestApp : public lite::Application {
         gl::clearScreen(135 / 255.0f, 206 / 255.0f, 235 / 255.0f, 1.0, gl::COLOR_BUFFER | gl::DEPTH_BUFFER);
 
         int width, height;
-        lite::Window::getCurrent()->getSize(&width, &height);
+        karint::Window::getCurrent()->getSize(&width, &height);
         camera.update(width, height);
 
         renderable.use();
@@ -140,8 +140,8 @@ public:
 };
 
 int main() {
-    lite::init();
-    lite::DesktopApplication(new TestApp, 800, 600, "lite engine").start();
-    lite::terminate();
+    karint::init();
+    karint::DesktopApplication(new TestApp, 800, 600, "karint engine").start();
+    karint::terminate();
     return 0;
 }

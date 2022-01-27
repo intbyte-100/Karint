@@ -14,7 +14,7 @@ _build(){
 
 if [ "$1" == 'run' ]; then
     _build
-    ./LiteEngine
+    ./karintEngine
 elif [ "$1" == "build" ]; then
     _build
 elif [ "$1" == "export_res" ]; then

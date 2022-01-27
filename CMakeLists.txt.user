@@ -104,8 +104,8 @@
 -DCMAKE_PREFIX_PATH:STRING=%{Qt:QT_INSTALL_PREFIX}
 -DCMAKE_C_COMPILER:STRING=%{Compiler:Executable:C}
 -DCMAKE_CXX_COMPILER:STRING=%{Compiler:Executable:Cxx}</value>
-    <value Attribute="QString" key="CMake.Source.Directory">/home/intbyte/projects/lite_engine</value>
-    <value Attribute="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">/home/intbyte/projects/build-lite_engine-Desktop-Debug</value>
+    <value Attribute="QString" key="CMake.Source.Directory">/home/intbyte/projects/karint_engine</value>
+    <value Attribute="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">/home/intbyte/projects/build-karint_engine-Desktop-Debug</value>
     <valuemap Attribute="QVariantMap" key="ProjectExplorer.BuildConfiguration.BuildStepList.0">
      <valuemap Attribute="QVariantMap" key="ProjectExplorer.BuildStepList.Step.0">
       <valuelist Attribute="QVariantList" key="CMakeProjectManager.MakeStep.BuildTargets">
@@ -151,8 +151,8 @@
 -DCMAKE_PREFIX_PATH:STRING=%{Qt:QT_INSTALL_PREFIX}
 -DCMAKE_C_COMPILER:STRING=%{Compiler:Executable:C}
 -DCMAKE_CXX_COMPILER:STRING=%{Compiler:Executable:Cxx}</value>
-    <value Attribute="QString" key="CMake.Source.Directory">/home/intbyte/projects/lite_engine</value>
-    <value Attribute="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">/home/intbyte/projects/build-lite_engine-Desktop-Release</value>
+    <value Attribute="QString" key="CMake.Source.Directory">/home/intbyte/projects/karint_engine</value>
+    <value Attribute="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">/home/intbyte/projects/build-karint_engine-Desktop-Release</value>
     <valuemap Attribute="QVariantMap" key="ProjectExplorer.BuildConfiguration.BuildStepList.0">
      <valuemap Attribute="QVariantMap" key="ProjectExplorer.BuildStepList.Step.0">
       <valuelist Attribute="QVariantList" key="CMakeProjectManager.MakeStep.BuildTargets">
@@ -208,16 +208,16 @@
     <valuelist Attribute="QVariantList" key="CustomOutputParsers"/>
     <value Attribute="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist Attribute="QVariantList" key="PE.EnvironmentAspect.Changes"/>
-    <value Attribute="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">LiteEngine</value>
-    <value Attribute="QString" key="ProjectExplorer.ProjectConfiguration.Id">CMakeProjectManager.CMakeRunConfiguration.LiteEngine</value>
-    <value Attribute="QString" key="ProjectExplorer.RunConfiguration.BuildKey">LiteEngine</value>
+    <value Attribute="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">karintEngine</value>
+    <value Attribute="QString" key="ProjectExplorer.ProjectConfiguration.Id">CMakeProjectManager.CMakeRunConfiguration.karintEngine</value>
+    <value Attribute="QString" key="ProjectExplorer.RunConfiguration.BuildKey">karintEngine</value>
     <value Attribute="bool" key="RunConfiguration.UseCppDebugger">false</value>
     <value Attribute="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
     <value Attribute="bool" key="RunConfiguration.UseLibrarySearchPath">true</value>
     <value Attribute="bool" key="RunConfiguration.UseQmlDebugger">false</value>
     <value Attribute="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
-    <value Attribute="QString" key="RunConfiguration.WorkingDirectory">/home/intbyte/projects/lite_engine/res</value>
-    <value Attribute="QString" key="RunConfiguration.WorkingDirectory.default">/home/intbyte/projects/build-lite_engine-Desktop-Debug</value>
+    <value Attribute="QString" key="RunConfiguration.WorkingDirectory">/home/intbyte/projects/karint_engine/res</value>
+    <value Attribute="QString" key="RunConfiguration.WorkingDirectory.default">/home/intbyte/projects/build-karint_engine-Desktop-Debug</value>
    </valuemap>
    <value Attribute="qlonglong" key="ProjectExplorer.Target.RunConfigurationCount">1</value>
   </valuemap>
