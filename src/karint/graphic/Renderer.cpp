@@ -1,10 +1,9 @@
 #include "Renderer.h"
 #include "karint/graphic/gl/gl.h"
 
-void karint::Renderer::use(PerspectiveCamera *camera) {
+void karint::Renderer::use(Camera *camera) {
     shaderProgram.use();
-    auto projection = camera->getProjection();
-    projectionUniform.setMatrix(projection, false);
+    projectionUniform.setMatrix(camera->projection, false);
     view.setMatrix(camera->view, false);
 }
 

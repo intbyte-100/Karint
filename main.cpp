@@ -14,6 +14,7 @@
 #include "karint/graphic/Renderer.h"
 #include "karint/math/math.h"
 #include "karint/input/CameraController.h"
+#include "karint/graphic/OrthographicCamera.h"
 
 
 using namespace karint;
@@ -23,11 +24,12 @@ class TestApp : public karint::Application {
     karint::Texture texture;
     karint::Texture texture2;
     karint::PerspectiveCamera camera;
+
     karint::Renderable renderable;
     karint::Renderer renderer;
     karint::CameraController controller;
 
-    glm::vec3 finalDirection;
+
 
     void onCreate() override {
         std::cout << karint::gl::getBackendInfo() << "\n";
@@ -86,7 +88,7 @@ class TestApp : public karint::Application {
         Window::getCurrent()->hideCursor(true);
 
         controller.setCamera(&camera);
-        controller.smooth = 0.6f;
+        controller.smooth = 0.65f;
         input::mouseCallback = controller.getMouseCallback();
     }
 
@@ -118,6 +120,7 @@ class TestApp : public karint::Application {
         int width, height;
         karint::Window::getCurrent()->getSize(&width, &height);
         camera.update(width, height);
+
 
         renderable.use();
         texture.bind(0);

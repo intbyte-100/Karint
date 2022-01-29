@@ -2,7 +2,7 @@
 
 #include "karint/graphic/gl/ShaderProgram.h"
 #include "Renderable.h"
-#include "PerspectiveCamera.h"
+#include "Camera.h"
 
 namespace karint {
     class Renderer {
@@ -13,7 +13,7 @@ namespace karint {
         Uniform view;
     public:
         void setShader(ShaderProgram program);
-        void use(PerspectiveCamera *camera);
+        void use(Camera *camera);
         void draw(Renderable *renderable);
     };
 }

@@ -10,7 +10,7 @@ float karint::CameraController::getPitch() const {
     return pitch;
 }
 
-void karint::CameraController::setCamera(karint::PerspectiveCamera *camera) {
+void karint::CameraController::setCamera(karint::Camera *camera) {
     CameraController::camera = camera;
 }
 

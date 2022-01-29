@@ -1,12 +1,12 @@
 #pragma once
 
 #include <functional>
-#include "karint/graphic/PerspectiveCamera.h"
+#include "karint/graphic/Camera.h"
 
 namespace karint {
     class CameraController {
     private:
-        PerspectiveCamera *camera;
+        Camera *camera;
         float yaw;
         float pitch;
         float lastX = 0, lastY = 0;
@@ -18,7 +18,7 @@ namespace karint {
         std::function<void(double, double)> getMouseCallback();
         float getYaw() const;
         float getPitch() const;
-        void setCamera(PerspectiveCamera *camera);
+        void setCamera(Camera *camera);
         void update();
     };
 }
