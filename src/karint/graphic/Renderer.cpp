@@ -5,6 +5,9 @@ void karint::Renderer::use(Camera *camera) {
     shaderProgram.use();
     projectionUniform.setMatrix(camera->projection, false);
     view.setMatrix(camera->view, false);
+
+    if (environment)
+        ambient.setFloat(environment->ambient.x, environment->ambient.y, environment->ambient.z, 1);
 }
 
 void karint::Renderer::setShader(karint::ShaderProgram program) {
@@ -12,10 +15,15 @@ void karint::Renderer::setShader(karint::ShaderProgram program) {
     projectionUniform = shaderProgram.getUniform("projection");
     model = shaderProgram.getUniform("model");
     view = shaderProgram.getUniform("view");
+    ambient = shaderProgram.getUniform("ambient");
 }
 
 void karint::Renderer::draw(karint::Renderable *renderable) {
     model.setMatrix(renderable->model, false);
     renderable->use();
     gl::drawArrays(gl::TRIANGLE, 0, renderable->triangles);
+}
+
+void karint::Renderer::setEnvironment(Environment* environment) {
+    this->environment = environment;
 }

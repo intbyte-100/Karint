@@ -39,7 +39,14 @@ set(ENGINE_SOURCE
         src/karint/math/math.cpp
         src/karint/math/math.h
         src/karint/input/CameraController.cpp
-        src/karint/input/CameraController.h src/karint/graphic/OrthographicCamera.cpp src/karint/graphic/OrthographicCamera.h src/karint/graphic/Camera.cpp src/karint/graphic/Camera.h)
+        src/karint/input/CameraController.h
+        src/karint/graphic/OrthographicCamera.cpp
+        src/karint/graphic/OrthographicCamera.h
+        src/karint/graphic/Camera.cpp
+        src/karint/graphic/Camera.h
+        src/karint/graphic/g3d/Environment.cpp
+        src/karint/graphic/g3d/Environment.h
+)
 
 add_executable(KarintEngine main.cpp ${ENGINE_SOURCE})
 

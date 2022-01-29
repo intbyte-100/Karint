@@ -22,9 +22,8 @@ using namespace karint;
 class TestApp : public karint::Application {
     karint::ShaderProgram *program;
     karint::Texture texture;
-    karint::Texture texture2;
     karint::PerspectiveCamera camera;
-
+    karint::Environment environment;
     karint::Renderable renderable;
     karint::Renderer renderer;
     karint::CameraController controller;
@@ -73,11 +72,10 @@ class TestApp : public karint::Application {
         renderable.triangles = 36;
 
         texture = Texture::load("stone.jpeg");
-        texture2 = Texture::load("stone.jpeg");
+
 
         program->use();
         program->getUniform("texture1").setInt(0);
-        program->getUniform("texture2").setInt(1);
         renderer.setShader(*program);
 
         camera = PerspectiveCamera(100, 0.1f, 45);
@@ -90,6 +88,9 @@ class TestApp : public karint::Application {
         controller.setCamera(&camera);
         controller.smooth = 0.65f;
         input::mouseCallback = controller.getMouseCallback();
+
+        environment.addAmbient(glm::vec3(0.6));
+        renderer.setEnvironment(&environment);
     }
 
     void render() override {
@@ -109,6 +110,8 @@ class TestApp : public karint::Application {
         else if(input::isPressed('D'))
             move += math::rotate(velocity, controller.getYaw());
 
+        if(input::isPressed(input::SHIFT))
+            move*=1.7;
 
         move*=Window::getCurrent()->getDeltaTime();
         camera.position.x += move.x;
@@ -124,7 +127,6 @@ class TestApp : public karint::Application {
 
         renderable.use();
         texture.bind(0);
-        texture2.bind(1);
 
         renderer.use(&camera);
 
