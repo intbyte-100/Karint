@@ -5,6 +5,7 @@
 
 #include "karint/util/FileNotFoundException.h"
 #include "gl.h"
+#include "karint/util/File.h"
 
 void karint::Texture::dispose() {
     glDeleteTextures(1, &id);
@@ -39,7 +40,7 @@ karint::Texture karint::Texture::load(const std::string &file) {
     int width;
     int height;
     int channels;
-    auto *image = stbi_load(file.c_str(), &width, &height, &channels, 0);
+    auto *image = stbi_load(File::load(file).getPath().c_str(), &width, &height, &channels, 0);
 
     if (image == nullptr) {
         throw FileNotFoundException("file " + file + " is not found");

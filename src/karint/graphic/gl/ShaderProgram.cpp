@@ -2,6 +2,7 @@
 #include <fstream>
 #include "glad/glad.h"
 #include "karint/util/KarintException.h"
+#include "karint/util/File.h"
 #include <sstream>
 #include <string>
 
@@ -70,19 +71,10 @@ void karint::ShaderProgram::use()
 
 karint::ShaderProgram *karint::ShaderProgram::load(const std::string &vertex, const std::string &fragment)
 {
-    std::ifstream file;
-    std::stringstream vShaderStream, fShaderStream;
+    std::string vertexSource = File::load(vertex).read();
+    std::string fragmentSource = File::load(fragment).read();
 
-    file.open(vertex);
-
-    vShaderStream << file.rdbuf();
-    file.close();
-
-    file.open(fragment);
-    fShaderStream << file.rdbuf();
-    file.close();
-
-    return new ShaderProgram(vShaderStream.str().c_str(), fShaderStream.str().c_str());
+    return new ShaderProgram(vertexSource.c_str(), fragmentSource.c_str());
 }
 
 karint::ShaderProgram::~ShaderProgram()

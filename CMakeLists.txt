@@ -46,7 +46,7 @@ set(ENGINE_SOURCE
         src/karint/graphic/Camera.h
         src/karint/graphic/g3d/Environment.cpp
         src/karint/graphic/g3d/Environment.h
-)
+        src/karint/util/File.cpp src/karint/util/File.h)
 
 add_executable(KarintEngine main.cpp ${ENGINE_SOURCE})
 

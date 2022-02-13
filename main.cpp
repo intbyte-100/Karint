@@ -89,7 +89,7 @@ class TestApp : public karint::Application {
         controller.smooth = 0.65f;
         input::mouseCallback = controller.getMouseCallback();
 
-        environment.addAmbient(glm::vec3(0.6));
+        environment.addAmbient(glm::vec3(1.0f));
         renderer.setEnvironment(&environment);
     }
 
