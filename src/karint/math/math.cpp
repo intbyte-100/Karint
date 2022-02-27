@@ -32,3 +32,22 @@ glm::vec2 karint::math::rotate(glm::vec2 vector, float angle) {
     vector.y = (float) cos(glm::radians(angle)) * vector.y;
     return vector;
 }
+
+std::vector<glm::vec3> karint::math::calculateNormals(float *triangles, int count, int step) {
+    std::vector<glm::vec3> normals(count/(3+step)*3);
+    int index = 0;
+    for (int i = 0; i < count; i+=(3+step)*3) {
+        glm::vec3 vert(triangles[i], triangles[i+1], triangles[i+2]);
+        glm::vec3 vert2(triangles[i+step+3], triangles[i+step+4], triangles[i+step+5]);
+        glm::vec3 vert3(triangles[i+step*2+6],triangles[i+step*2+7], triangles[i+step*2+8]);
+
+        glm::vec3 vector = vert3 - vert;
+        glm::vec3 vector2 = vert2 - vert;
+
+        auto normal = glm::cross(vector, vector2);
+        normals[index++] = normal;
+        normals[index++] = normal;
+        normals[index++] = normal;
+    }
+    return normals;
+}

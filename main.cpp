@@ -83,14 +83,23 @@ class TestApp : public karint::Application {
         camera.direction = glm::vec3(1.0f, 0.0f, -1.0f);
 
 
-        Window::getCurrent()->hideCursor(true);
+        //Window::getCurrent()->hideCursor(true);
 
         controller.setCamera(&camera);
         controller.smooth = 0.65f;
         input::mouseCallback = controller.getMouseCallback();
 
-        environment.addAmbient(glm::vec3(1.0f));
+        environment.addAmbient(glm::vec3(1.2f));
         renderer.setEnvironment(&environment);
+
+        glm::vec3 vec0(-0.5f, -0.5f, -0.5f);
+        glm::vec3 vec1(0.5f, -0.5f, -0.5f);
+        glm::vec3 vec2(0.5f, 0.5f, -0.5f);
+
+        glm::vec3 n = vec2 - vec0;
+        glm::vec3 n2 = vec1 - vec0;
+        auto vec = glm::cross(n, n2);
+        std::cout << vec.x << " " << vec.y << " " << vec.z;
     }
 
     void render() override {

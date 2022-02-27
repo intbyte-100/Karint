@@ -4,7 +4,6 @@
 #include <string>
 #include <array>
 
-int sessionType = 0;
 
 void karint::terminate()
 {
