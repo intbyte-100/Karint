@@ -16,9 +16,13 @@ void karint::Renderer::setShader(karint::ShaderProgram program) {
     model = shaderProgram.getUniform("model");
     view = shaderProgram.getUniform("view");
     ambient = shaderProgram.getUniform("ambient");
+    diffuseColor = shaderProgram.getUniform("diffuseColor");
+    diffuseLightPosition = shaderProgram.getUniform("diffusePosition");
 }
 
 void karint::Renderer::draw(karint::Renderable *renderable) {
+    diffuseColor.setVec3(&environment->diffuseColor);
+    diffuseLightPosition.setVec3(&environment->diffuseLightPosition);
     model.setMatrix(renderable->model, false);
     renderable->use();
     gl::drawArrays(gl::TRIANGLE, 0, renderable->triangles);

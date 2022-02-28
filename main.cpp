@@ -15,6 +15,7 @@
 #include "karint/math/math.h"
 #include "karint/input/CameraController.h"
 #include "karint/graphic/OrthographicCamera.h"
+#include "karint/graphic/g3d/Vertex.h"
 
 
 using namespace karint;
@@ -33,46 +34,63 @@ class TestApp : public karint::Application {
     void onCreate() override {
         std::cout << karint::gl::getBackendInfo() << "\n";
 
-        float vertices[] = {-0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 0.5f, 0.5f, -0.5f, 1.0f,
-                            1.0f,
-                            0.5f, 0.5f, -0.5f, 1.0f, 1.0f, -0.5f, 0.5f, -0.5f, 0.0f, 1.0f, -0.5f, -0.5f, -0.5f, 0.0f,
-                            0.0f,
 
-                            -0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 0.5f, -0.5f, 0.5f, 1.0f, 0.0f, 0.5f, 0.5f, 0.5f, 1.0f, 1.0f,
-                            0.5f, 0.5f, 0.5f, 1.0f, 1.0f, -0.5f, 0.5f, 0.5f, 0.0f, 1.0f, -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
+        std::vector<float> vertices {
+                -0.5f, -0.5f, -0.5f, 0, 0, 0, 0.0f, 0.0f,
+                0.5f, -0.5f, -0.5f, 0, 0, 0, 1.0f, 0.0f,
+                0.5f,  0.5f, -0.5f,0, 0, 0,  1.0f, 1.0f,
+                0.5f,  0.5f, -0.5f, 0, 0, 0, 1.0f, 1.0f,
+                -0.5f,  0.5f, -0.5f, 0, 0, 0, 0.0f, 1.0f,
+                -0.5f, -0.5f, -0.5f,0, 0, 0,  0.0f, 0.0f,
 
-                            -0.5f, 0.5f, 0.5f, 1.0f, 0.0f, -0.5f, 0.5f, -0.5f, 1.0f, 1.0f, -0.5f, -0.5f, -0.5f, 0.0f,
-                            1.0f,
-                            -0.5f, -0.5f, -0.5f, 0.0f, 1.0f, -0.5f, -0.5f, 0.5f, 0.0f, 0.0f, -0.5f, 0.5f, 0.5f, 1.0f,
-                            0.0f,
+                -0.5f, -0.5f,  0.5f, 0, 0, 0, 0.0f, 0.0f,
+                0.5f, -0.5f,  0.5f, 0, 0, 0, 1.0f, 0.0f,
+                0.5f,  0.5f,  0.5f,  0, 0, 0,1.0f, 1.0f,
+                0.5f,  0.5f,  0.5f,  0, 0, 0,1.0f, 1.0f,
+                -0.5f,  0.5f,  0.5f, 0, 0, 0, 0.0f, 1.0f,
+                -0.5f, -0.5f,  0.5f, 0, 0, 0, 0.0f, 0.0f,
 
-                            0.5f, 0.5f, 0.5f, 1.0f, 0.0f, 0.5f, 0.5f, -0.5f, 1.0f, 1.0f, 0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
-                            0.5f, -0.5f, -0.5f, 0.0f, 1.0f, 0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
+                -0.5f,  0.5f,  0.5f, 0, 0, 0, 1.0f, 0.0f,
+                -0.5f,  0.5f, -0.5f, 0, 0, 0, 1.0f, 1.0f,
+                -0.5f, -0.5f, -0.5f, 0, 0, 0, 0.0f, 1.0f,
+                -0.5f, -0.5f, -0.5f, 0, 0, 0, 0.0f, 1.0f,
+                -0.5f, -0.5f,  0.5f, 0, 0, 0, 0.0f, 0.0f,
+                -0.5f,  0.5f,  0.5f, 0, 0, 0, 1.0f, 0.0f,
 
-                            -0.5f, -0.5f, -0.5f, 0.0f, 1.0f, 0.5f, -0.5f, -0.5f, 1.0f, 1.0f, 0.5f, -0.5f, 0.5f, 1.0f,
-                            0.0f,
-                            0.5f, -0.5f, 0.5f, 1.0f, 0.0f, -0.5f, -0.5f, 0.5f, 0.0f, 0.0f, -0.5f, -0.5f, -0.5f, 0.0f,
-                            1.0f,
+                0.5f,  0.5f,  0.5f, 0, 0, 0, 1.0f, 0.0f,
+                0.5f,  0.5f, -0.5f, 0, 0, 0, 1.0f, 1.0f,
+                0.5f, -0.5f, -0.5f, 0, 0, 0, 0.0f, 1.0f,
+                0.5f, -0.5f, -0.5f, 0, 0, 0, 0.0f, 1.0f,
+                0.5f, -0.5f,  0.5f, 0, 0, 0, 0.0f, 0.0f,
+                0.5f,  0.5f,  0.5f, 0, 0, 0, 1.0f, 0.0f,
 
-                            -0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.5f, 0.5f, -0.5f, 1.0f, 1.0f, 0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
-                            0.5f, 0.5f, 0.5f, 1.0f, 0.0f, -0.5f, 0.5f, 0.5f, 0.0f, 0.0f, -0.5f, 0.5f, -0.5f, 0.0f,
-                            1.0f};
+                -0.5f, -0.5f, -0.5f, 0, 0, 0, 0.0f, 1.0f,
+                0.5f, -0.5f, -0.5f, 0, 0, 0, 1.0f, 1.0f,
+                0.5f, -0.5f,  0.5f, 0, 0, 0, 1.0f, 0.0f,
+                0.5f, -0.5f,  0.5f, 0, 0, 0, 1.0f, 0.0f,
+                -0.5f, -0.5f,  0.5f, 0, 0, 0, 0.0f, 0.0f,
+                -0.5f, -0.5f, -0.5f, 0, 0, 0, 0.0f, 1.0f,
 
-        std::vector<attribute::Attribute> array{
-                attribute::POSITION,
-                attribute::TEXTURE_2D
+                -0.5f,  0.5f, -0.5f, 0, 0, 0, 0.0f, 1.0f,
+                0.5f,  0.5f, -0.5f, 0, 0, 0, 1.0f, 1.0f,
+                0.5f,  0.5f,  0.5f, 0, 0, 0, 1.0f, 0.0f,
+                0.5f,  0.5f,  0.5f, 0, 0, 0, 1.0f, 0.0f,
+                -0.5f,  0.5f,  0.5f, 0, 0, 0, 0.0f, 0.0f,
+                -0.5f,  0.5f, -0.5f, 0, 0, 0, 0.0f, 1.0f
         };
 
+        Vertex::calculateNormals(reinterpret_cast<std::vector<Vertex>*>(&vertices));
 
-        program = ShaderProgram::load("triangle.vert", "triangle.frag");
+
+        program = ShaderProgram::load("3dDefaultShader.vert", "3dDefaultShader.frag");
 
         renderable.create();
-        renderable.setVertices(vertices, 180, gl::STATIC_DRAW);
-        renderable.enableAttributes(array);
+        renderable.setVertices(&vertices[0], vertices.size(), gl::STATIC_DRAW);
         renderable.triangles = 36;
 
         texture = Texture::load("stone.jpeg");
 
+        karint::Vertex::enableDefaultVertexAttributes();
 
         program->use();
         program->getUniform("texture1").setInt(0);
@@ -83,13 +101,14 @@ class TestApp : public karint::Application {
         camera.direction = glm::vec3(1.0f, 0.0f, -1.0f);
 
 
-        //Window::getCurrent()->hideCursor(true);
+        Window::getCurrent()->hideCursor(true);
 
         controller.setCamera(&camera);
         controller.smooth = 0.65f;
         input::mouseCallback = controller.getMouseCallback();
 
-        environment.addAmbient(glm::vec3(1.2f));
+        environment.addAmbient(glm::vec3(0.8));
+        environment.setDiffuseLight(glm::vec3(1.5f, 2.0f, 2.0f), glm::vec3(1.0));
         renderer.setEnvironment(&environment);
 
         glm::vec3 vec0(-0.5f, -0.5f, -0.5f);
@@ -144,6 +163,10 @@ class TestApp : public karint::Application {
                 renderable.model = glm::translate(glm::mat4(1.0f), glm::vec3(x, 0, y));
                 renderer.draw(&renderable);
             }
+        }
+        for (int i = 0; i < 5; ++i) {
+            renderable.model = glm::translate(glm::mat4(1.0f), glm::vec3(5, i, 5));
+            renderer.draw(&renderable);
         }
     }
 

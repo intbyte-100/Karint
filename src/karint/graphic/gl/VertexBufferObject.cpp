@@ -7,11 +7,8 @@ void karint::VertexBufferObject::dispose()
     glDeleteBuffers(1, &id);
 }
 
-karint::VertexBufferObject::~VertexBufferObject() {
-    dispose();
-}
 
-void karint::VertexBufferObject::setVertices(float *vertices, int count, unsigned int type) {
+void karint::VertexBufferObject::setVertices(float *vertices, int count, unsigned int type) const {
     glBindBuffer(GL_ARRAY_BUFFER, id);
     glBufferData(GL_ARRAY_BUFFER, count * sizeof(float), vertices, type);
 }

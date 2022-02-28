@@ -6,9 +6,8 @@ namespace karint {
     {
     public:
         unsigned int id;
-        ~VertexBufferObject();
         void create();
-        void setVertices(float *vertices, int count, unsigned int type);
+        void setVertices(float *vertices, int count, unsigned int type) const;
         void dispose();
     };
 }

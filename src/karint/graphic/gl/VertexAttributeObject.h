@@ -15,6 +15,7 @@ namespace karint{
         constexpr Attribute RGB = 0x030604;
         constexpr Attribute RGBA = 0x040604;
         constexpr Attribute POSITION = 0x030604;
+        constexpr Attribute NORMAL = 0x030604;
         constexpr Attribute TEXTURE_2D = 0x020604;
     }
 

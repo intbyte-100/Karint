@@ -14,6 +14,9 @@ namespace karint {
         Uniform model;
         Uniform view;
         Uniform ambient;
+        Uniform diffuseLightPosition;
+        Uniform diffuseColor;
+
     public:
         void setEnvironment(Environment* environment);
         void setShader(ShaderProgram program);
