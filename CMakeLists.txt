@@ -28,7 +28,7 @@ set(ENGINE_SOURCE
         src/karint/graphic/gl/Uniform.cpp
         src/karint/graphic/gl/Texture.h
         src/karint/graphic/gl/Texture.cpp
-        src/karint/util/FileNotFoundException.h
+        src/karint/util/FileException.h
         src/karint/graphic/PerspectiveCamera.cpp
         src/karint/graphic/PerspectiveCamera.h
         src/karint/input/input.cpp
@@ -46,10 +46,35 @@ set(ENGINE_SOURCE
         src/karint/graphic/Camera.h
         src/karint/graphic/g3d/Environment.cpp
         src/karint/graphic/g3d/Environment.h
-        src/karint/util/File.cpp src/karint/util/File.h src/karint/graphic/g3d/Vertex.cpp src/karint/graphic/g3d/Vertex.h)
+        src/karint/util/File.cpp
+        src/karint/util/File.h
+        src/karint/graphic/g3d/Vertex.cpp
+        src/karint/graphic/g3d/Vertex.h
+        src/karint/util/logger.cpp
+        src/karint/util/logger.h)
+
+
 
 add_executable(KarintEngine main.cpp ${ENGINE_SOURCE})
 
+if (UNIX)
+    #gtk
+    find_package(PkgConfig REQUIRED)
+    pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
+    # Setup CMake to use GTK+, tell the compiler where to look for headers
+    # and to the linker where to look for libraries
+    include_directories(${GTK3_INCLUDE_DIRS})
+    link_directories(${GTK3_LIBRARY_DIRS})
+    # Add other flags to the compiler
+    add_definitions(${GTK3_CFLAGS_OTHER})
+    # Add an executable compiled from KarintEngine.c
+
+    # Link the target to the GTK+ libraries
+    target_link_libraries(KarintEngine ${GTK3_LIBRARIES})
+endif ()
+
+
+# glm
 find_package(glm REQUIRED)
 include_directories(${GLM_INCLUDE_DIRS})
 link_directories(${GLM_LIBRARY_DIRS})

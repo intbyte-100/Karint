@@ -6,6 +6,7 @@ namespace karint {
     void init();
     void update();
     void terminate();
+    void systemDialog(const char* title, const char* text);
 }
 
 #endif

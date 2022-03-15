@@ -17,7 +17,6 @@
 #include "karint/graphic/OrthographicCamera.h"
 #include "karint/graphic/g3d/Vertex.h"
 
-
 using namespace karint;
 
 class TestApp : public karint::Application {
@@ -110,15 +109,6 @@ class TestApp : public karint::Application {
         environment.addAmbient(glm::vec3(0.8));
         environment.setDiffuseLight(glm::vec3(1.5f, 2.0f, 2.0f), glm::vec3(1.0));
         renderer.setEnvironment(&environment);
-
-        glm::vec3 vec0(-0.5f, -0.5f, -0.5f);
-        glm::vec3 vec1(0.5f, -0.5f, -0.5f);
-        glm::vec3 vec2(0.5f, 0.5f, -0.5f);
-
-        glm::vec3 n = vec2 - vec0;
-        glm::vec3 n2 = vec1 - vec0;
-        auto vec = glm::cross(n, n2);
-        std::cout << vec.x << " " << vec.y << " " << vec.z;
     }
 
     void render() override {
@@ -137,6 +127,9 @@ class TestApp : public karint::Application {
             move -= math::rotate(velocity, controller.getYaw());
         else if(input::isPressed('D'))
             move += math::rotate(velocity, controller.getYaw());
+
+        if(input::isPressed('Q'))
+            texture = Texture::load("Main.java");
 
         if(input::isPressed(input::SHIFT))
             move*=1.7;
@@ -177,6 +170,7 @@ public:
 };
 
 int main() {
+
     karint::init();
     karint::DesktopApplication(new TestApp, 800, 600, "karint engine").start();
     karint::terminate();

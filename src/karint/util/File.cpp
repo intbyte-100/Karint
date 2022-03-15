@@ -1,7 +1,7 @@
 #include <fstream>
 #include <sstream>
 #include "File.h"
-#include "FileNotFoundException.h"
+#include "FileException.h"
 
 std::string karint::File::getPath() {
     return path;
@@ -14,7 +14,7 @@ karint::File karint::File::load(const std::string& path) {
     std::string message("file ");
     message.append(path).append(" is not found");
 
-    throw FileNotFoundException(message);
+    throw FileException(message);
 }
 
 bool karint::File::exist() {

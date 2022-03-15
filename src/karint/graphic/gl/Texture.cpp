@@ -3,7 +3,7 @@
 #include "glad/glad.h"
 #include "stb_image.h"
 
-#include "karint/util/FileNotFoundException.h"
+#include "karint/util/FileException.h"
 #include "gl.h"
 #include "karint/util/File.h"
 
@@ -43,7 +43,7 @@ karint::Texture karint::Texture::load(const std::string &file) {
     auto *image = stbi_load(File::load(file).getPath().c_str(), &width, &height, &channels, 0);
 
     if (image == nullptr) {
-        throw FileNotFoundException("file " + file + " is not found");
+        throw FileException( "file " + file + " is not found");
     }
 
     Texture texture;

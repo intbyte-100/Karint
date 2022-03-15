@@ -1,18 +1,20 @@
+#pragma once
 #include <exception>
 #include <string>
 #include <iostream>
+#include "logger.h"
 
 namespace karint {
-    class KarintException : std::exception {
+    class KarintException : public std::exception {
     private:
-        const char * message;
+        std::string message;
     public:
         explicit KarintException(const std::string &message){
-            this->message = message.c_str();
-            std::cout << "ERROR: " << message << std::endl;
+            this->message = message;
+            logger::error("runtime exception", message.c_str());
         }
         const char * what() const noexcept override {
-            return message;
+            return message.c_str();
         }
     };
 }
