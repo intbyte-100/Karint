@@ -1,4 +1,5 @@
 #include <glm/trigonometric.hpp>
+#include <iostream>
 #include "CameraController.h"
 #include "karint/math/math.h"
 
@@ -12,6 +13,8 @@ float karint::CameraController::getPitch() const {
 
 void karint::CameraController::setCamera(karint::Camera *camera) {
     CameraController::camera = camera;
+    updateDirection();
+    camera->direction = finalDirection;
 }
 
 void karint::CameraController::update() {
@@ -22,6 +25,7 @@ std::function<void(double, double)> karint::CameraController::getMouseCallback()
     return [this](double x, double y){
         float xpos = static_cast<float>(x);
         float ypos = static_cast<float>(y);
+
 
         if (firstMouse)
         {
@@ -47,9 +51,13 @@ std::function<void(double, double)> karint::CameraController::getMouseCallback()
         if (pitch < -89.0f)
             pitch = -89.0f;
 
-        finalDirection.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
-        finalDirection.y = sin(glm::radians(pitch));
-        finalDirection.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-        finalDirection = glm::normalize(finalDirection);
+        updateDirection();
     };
+}
+
+void karint::CameraController::updateDirection() {
+    finalDirection.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+    finalDirection.y = sin(glm::radians(pitch));
+    finalDirection.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+    finalDirection = glm::normalize(finalDirection);
 }

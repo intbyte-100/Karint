@@ -97,13 +97,14 @@ void mouseCallback(GLFWwindow* window, double x, double y){
 }
 
 karint::Window::Window(const std::string &title, int width, int height){
-    window = glfwCreateWindow(width,height,title.c_str(), nullptr, nullptr);
+    window = glfwCreateWindow(width,height,title.c_str(), glfwGetPrimaryMonitor(), nullptr);
     if(window == nullptr) {
         glfwTerminate();
         throw karint::KarintException("Failed to create GLFW window");
     }
 
     glfwMakeContextCurrent(window);
+
 
     if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress)) {
         glfwTerminate();

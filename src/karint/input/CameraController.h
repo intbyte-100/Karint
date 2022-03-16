@@ -7,9 +7,9 @@ namespace karint {
     class CameraController {
     private:
         Camera *camera;
-        float yaw;
-        float pitch;
-        float lastX = 0, lastY = 0;
+        float yaw = 0;
+        float pitch = -30;
+        float lastX, lastY;
         bool firstMouse = true;
         glm::vec3 finalDirection;
     public:
@@ -19,6 +19,7 @@ namespace karint {
         float getYaw() const;
         float getPitch() const;
         void setCamera(Camera *camera);
+        void updateDirection();
         void update();
     };
 }
