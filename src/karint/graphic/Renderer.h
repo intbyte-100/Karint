@@ -22,7 +22,6 @@ namespace karint {
         void setShader(ShaderProgram program);
         void use(Camera *camera);
         void draw(Renderable *renderable);
-        void begin();
     };
 }
 

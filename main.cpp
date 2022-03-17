@@ -87,6 +87,11 @@ class TestApp : public karint::Application {
         renderable.setVertices(&vertices[0], vertices.size(), gl::STATIC_DRAW);
         renderable.triangles = 36;
 
+        Material material(glm::vec3(1));
+        material.create();
+        material.update();
+        renderable.material = material;
+
         texture = Texture::load("stone.jpeg");
 
         karint::Vertex::enableDefaultVertexAttributes();

@@ -1,9 +1,7 @@
 #include "ShaderProgram.h"
-#include <fstream>
 #include "glad/glad.h"
 #include "karint/util/KarintException.h"
 #include "karint/util/File.h"
-#include <sstream>
 #include <string>
 
 karint::ShaderProgram::ShaderProgram(const char *vertex, const char *fragment)
@@ -80,4 +78,16 @@ karint::ShaderProgram *karint::ShaderProgram::load(const std::string &vertex, co
 karint::ShaderProgram::~ShaderProgram()
 {
     dispose();
+}
+
+unsigned int karint::ShaderProgram::getUniformBlockIndex(const char *name) const {
+    return glGetUniformBlockIndex(shaderProgram, name);
+}
+
+void karint::ShaderProgram::uniformBlockBinding(unsigned int index, unsigned int binding) const {
+    glUniformBlockBinding(shaderProgram, index, binding);
+}
+
+void karint::ShaderProgram::uniformBlockBinding(const char* name, unsigned int binding) const {
+    glUniformBlockBinding(shaderProgram, glGetUniformBlockIndex(shaderProgram, name), binding);
 }

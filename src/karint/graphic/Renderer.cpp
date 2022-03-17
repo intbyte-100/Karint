@@ -1,6 +1,7 @@
 #include "Renderer.h"
 #include "karint/graphic/gl/gl.h"
 
+
 void karint::Renderer::use(Camera *camera) {
     shaderProgram.use();
     projectionUniform.setMatrix(camera->projection, false);
@@ -18,6 +19,7 @@ void karint::Renderer::setShader(karint::ShaderProgram program) {
     ambient = shaderProgram.getUniform("ambient");
     diffuseColor = shaderProgram.getUniform("diffuseColor");
     diffuseLightPosition = shaderProgram.getUniform("diffusePosition");
+    shaderProgram.uniformBlockBinding("Material", 0);
 }
 
 void karint::Renderer::draw(karint::Renderable *renderable) {
