@@ -5,7 +5,8 @@
 #include <iostream>
 
 karint::DesktopApplication::DesktopApplication(Application *application, int width, int height, std::string title) {
-    window = new Window(title, width, height);
+    const GLFWvidmode * mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+    window = new Window(title, mode->width, mode->height);
     this->application = application;
     std::cout << "karint engine has been inited" << std::endl;
 }
