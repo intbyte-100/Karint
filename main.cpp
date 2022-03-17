@@ -97,7 +97,6 @@ class TestApp : public karint::Application {
 
         camera = PerspectiveCamera(100, 0.1f, 45);
         camera.position = glm::vec3(1.0f, 4.0f, 6.0f);
-        camera.direction = glm::vec3(1.0f, 0.0f, -1.0f);
 
 
         Window::getCurrent()->hideCursor(true);

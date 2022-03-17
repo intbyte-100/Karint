@@ -51,7 +51,7 @@ set(ENGINE_SOURCE
         src/karint/graphic/g3d/Vertex.cpp
         src/karint/graphic/g3d/Vertex.h
         src/karint/util/logger.cpp
-        src/karint/util/logger.h)
+        src/karint/util/logger.h src/karint/graphic/g3d/Material.cpp src/karint/graphic/g3d/Material.h)
 
 
 
