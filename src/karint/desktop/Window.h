@@ -13,7 +13,7 @@ namespace karint {
         float deltaTime;
         float lastTime;
     public:
-        Window(const std::string&, int  width, int height);
+        Window(const std::string&, int  width, int height, bool fullscreen = false);
         void getSize(int *width, int *height);
         bool isPressed(int key);
         bool shouldClose();

@@ -107,7 +107,7 @@ class TestApp : public karint::Application {
         Window::getCurrent()->hideCursor(true);
 
         controller.setCamera(&camera);
-        controller.smooth = 0.65f;
+        controller.smooth = 0.70f;
         input::mouseCallback = controller.getMouseCallback();
 
         environment.addAmbient(glm::vec3(0.8));
@@ -176,7 +176,7 @@ public:
 int main() {
 
     karint::init();
-    karint::DesktopApplication(new TestApp, 800, 600, "karint engine").start();
+    karint::DesktopApplication(new TestApp, "karint engine", 80, 600, true).start();
     karint::terminate();
     return 0;
 }

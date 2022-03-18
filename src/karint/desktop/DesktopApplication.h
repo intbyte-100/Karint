@@ -11,7 +11,7 @@ namespace karint {
         Application *application;
         Window *window;
     public:
-        DesktopApplication(Application *application, int width, int height, std::string title);
+        DesktopApplication(Application *application, std::string title, int width, int height, bool fullscreen = false);
         ~DesktopApplication();
         bool shouldTerminate();
         void start();
