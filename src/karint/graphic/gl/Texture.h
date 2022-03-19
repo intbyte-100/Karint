@@ -7,7 +7,7 @@ namespace karint {
     class Texture
     {
     public:
-        unsigned int id;
+        unsigned int id = 0;
         void setImage(int mipmapLevel, int sourceChanel, int glChanel, int width, int height, unsigned char *image);
         void setParameter(int type, int value);
         void generateMipmap();

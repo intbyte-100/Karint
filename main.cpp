@@ -20,7 +20,7 @@
 using namespace karint;
 
 class TestApp : public karint::Application {
-    karint::ShaderProgram *program;
+    karint::ShaderProgram *program = nullptr;
     karint::Texture texture;
     karint::PerspectiveCamera camera;
     karint::Environment environment;
