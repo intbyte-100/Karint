@@ -67,18 +67,14 @@ void karint::ShaderProgram::use()
     glUseProgram(shaderProgram);
 }
 
-karint::ShaderProgram *karint::ShaderProgram::load(const std::string &vertex, const std::string &fragment)
+karint::ShaderProgram karint::ShaderProgram::load(const std::string &vertex, const std::string &fragment)
 {
     std::string vertexSource = File::load(vertex).read();
     std::string fragmentSource = File::load(fragment).read();
 
-    return new ShaderProgram(vertexSource.c_str(), fragmentSource.c_str());
+    return ShaderProgram(vertexSource.c_str(), fragmentSource.c_str());
 }
 
-karint::ShaderProgram::~ShaderProgram()
-{
-    dispose();
-}
 
 unsigned int karint::ShaderProgram::getUniformBlockIndex(const char *name) const {
     return glGetUniformBlockIndex(shaderProgram, name);

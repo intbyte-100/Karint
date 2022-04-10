@@ -19,8 +19,6 @@ void main()
         vec4 vertex = model * vec4(aPos, 1.0);
         vec3 lightDir = normalize(diffusePosition - aPos);
 
-
-
         diffuse = vec4(diffuseColor * max(dot(lightDir, normal), 0.0), 1.0);
         TexCoord = vec2(aTexCoord.x, aTexCoord.y);
         gl_Position = projection * view * vertex;

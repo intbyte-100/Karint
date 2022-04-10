@@ -1,11 +1,9 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <karint/desktop/DesktopApplication.h>
 #include <karint/desktop/karint.h>
-#include "karint/graphic/gl/ElementBufferObject.h"
 #include "karint/graphic/gl/ShaderProgram.h"
 #include "karint/graphic/gl/Texture.h"
 #include "karint/graphic/gl/VertexAttributeObject.h"
-#include "karint/graphic/gl/VertexBufferObject.h"
 #include <iostream>
 #include "karint/graphic/gl/gl.h"
 #include "karint/graphic/PerspectiveCamera.h"
@@ -20,7 +18,7 @@
 using namespace karint;
 
 class TestApp : public karint::Application {
-    karint::ShaderProgram *program = nullptr;
+    karint::ShaderProgram program;
     karint::Texture texture;
     karint::PerspectiveCamera camera;
     karint::Environment environment;
@@ -29,56 +27,53 @@ class TestApp : public karint::Application {
     karint::CameraController controller;
 
 
-
     void onCreate() override {
         std::cout << karint::gl::getBackendInfo() << "\n";
 
 
-        std::vector<float> vertices {
-                -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 0.0f, 0.0f,
-                0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 0.0f,
-                0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 1.0f,
-                0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 1.0f,
-                -0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 0.0f, 1.0f,
-                -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 0.0f, 0.0f,
+        std::vector<float> vertices{
+                -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f,
+                0.5f, -0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 1.0f, 0.0f,
+                0.5f, 0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 1.0f, 1.0f,
+                0.5f, 0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 1.0f, 1.0f,
+                -0.5f, 0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f,
+                -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f,
 
-                -0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f, 0.0f, 0.0f,
-                0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  1.0f, 0.0f,
-                0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  1.0f, 1.0f,
-                0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  1.0f, 1.0f,
-                -0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f, 0.0f, 1.0f,
-                -0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f, 0.0f, 0.0f,
+                -0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+                0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f,
+                0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f,
+                0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f,
+                -0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f,
+                -0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
 
-                -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f, 1.0f, 0.0f,
-                -0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f, 1.0f, 1.0f,
-                -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f, 0.0f, 1.0f,
-                -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f, 0.0f, 1.0f,
-                -0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f, 0.0f, 0.0f,
-                -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f, 1.0f, 0.0f,
+                -0.5f, 0.5f, 0.5f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
+                -0.5f, 0.5f, -0.5f, -1.0f, 0.0f, 0.0f, 1.0f, 1.0f,
+                -0.5f, -0.5f, -0.5f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f,
+                -0.5f, -0.5f, -0.5f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f,
+                -0.5f, -0.5f, 0.5f, -1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+                -0.5f, 0.5f, 0.5f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
 
-                0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
-                0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  1.0f, 1.0f,
-                0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
-                0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
-                0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  0.0f, 0.0f,
-                0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
+                0.5f, 0.5f, 0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
+                0.5f, 0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f,
+                0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f,
+                0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f,
+                0.5f, -0.5f, 0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+                0.5f, 0.5f, 0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
 
-                -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f, 0.0f, 1.0f,
-                0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  1.0f, 1.0f,
-                0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f, 0.0f,
-                0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f, 0.0f,
-                -0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f, 0.0f, 0.0f,
-                -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f, 0.0f, 1.0f,
+                -0.5f, -0.5f, -0.5f, 0.0f, -1.0f, 0.0f, 0.0f, 1.0f,
+                0.5f, -0.5f, -0.5f, 0.0f, -1.0f, 0.0f, 1.0f, 1.0f,
+                0.5f, -0.5f, 0.5f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f,
+                0.5f, -0.5f, 0.5f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f,
+                -0.5f, -0.5f, 0.5f, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f,
+                -0.5f, -0.5f, -0.5f, 0.0f, -1.0f, 0.0f, 0.0f, 1.0f,
 
-                -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f, 0.0f, 1.0f,
-                0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 1.0f,
-                0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 0.0f,
-                0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 0.0f,
-                -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f, 0.0f, 0.0f,
-                -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 1.0f
+                -0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+                0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
+                0.5f, 0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
+                0.5f, 0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
+                -0.5f, 0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
+                -0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f
         };
-
-        
 
 
         program = ShaderProgram::load("3dDefaultShader.vert", "3dDefaultShader.frag");
@@ -87,18 +82,20 @@ class TestApp : public karint::Application {
         renderable.setVertices(&vertices[0], vertices.size(), gl::STATIC_DRAW);
         renderable.triangles = 36;
 
-        Material material(glm::vec3(1));
+        Material material(glm::vec3(1, 1, 1));
+
         material.create();
         material.update();
+
         renderable.material = material;
 
         texture = Texture::load("stone.jpeg");
 
         karint::Vertex::enableDefaultVertexAttributes();
 
-        program->use();
-        program->getUniform("texture1").setInt(0);
-        renderer.setShader(*program);
+        program.use();
+        program.getUniform("texture1").setInt(0);
+        renderer.setShader(program);
 
         camera = PerspectiveCamera(100, 0.1f, 45);
         camera.position = glm::vec3(1.0f, 4.0f, 6.0f);
@@ -111,7 +108,7 @@ class TestApp : public karint::Application {
         input::mouseCallback = controller.getMouseCallback();
 
         environment.addAmbient(glm::vec3(0.8));
-        environment.setDiffuseLight(glm::vec3(1.5f, 2.0f, 2.0f), glm::vec3(1 ,1, 1)*1.2f);
+        environment.setDiffuseLight(glm::vec3(1.5f, 2.0f, 2.0f), glm::vec3(1, 1, 1) * 1.2f);
         renderer.setEnvironment(&environment);
     }
 
@@ -121,24 +118,21 @@ class TestApp : public karint::Application {
         glm::vec2 move(0);
         glm::vec2 velocity(3);
 
-        if(input::isPressed(input::ESCAPE))
+        if (input::isPressed(input::ESCAPE))
             Window::getCurrent()->close();
         if (input::isPressed('W'))
-            move += math::rotate(velocity, controller.getYaw()-90);
-        else if(input::isPressed('S'))
-            move -= math::rotate(velocity, controller.getYaw()-90);
-        if(input::isPressed('A'))
+            move += math::rotate(velocity, controller.getYaw() - 90);
+        else if (input::isPressed('S'))
+            move -= math::rotate(velocity, controller.getYaw() - 90);
+        if (input::isPressed('A'))
             move -= math::rotate(velocity, controller.getYaw());
-        else if(input::isPressed('D'))
+        else if (input::isPressed('D'))
             move += math::rotate(velocity, controller.getYaw());
 
-        if(input::isPressed('Q'))
-            texture = Texture::load("Main.java");
+        if (input::isPressed(input::SHIFT))
+            move *= 1.7;
 
-        if(input::isPressed(input::SHIFT))
-            move*=1.7;
-
-        move*=Window::getCurrent()->getDeltaTime();
+        move *= Window::getCurrent()->getDeltaTime();
         camera.position.x += move.x;
         camera.position.z += move.y;
 
@@ -169,7 +163,7 @@ class TestApp : public karint::Application {
 
 public:
     ~TestApp() {
-        delete program;
+        program.dispose();
     }
 };
 
