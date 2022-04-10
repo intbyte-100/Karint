@@ -19,6 +19,7 @@ using namespace karint;
 
 class TestApp : public karint::Application {
     karint::ShaderProgram program;
+    karint::ShaderProgram lightProgram;
     karint::Texture texture;
     karint::PerspectiveCamera camera;
     karint::Environment environment;
@@ -76,14 +77,15 @@ class TestApp : public karint::Application {
         };
 
 
-        program = ShaderProgram::load("3dDefaultShader.vert", "3dDefaultShader.frag");
-
+        program = ShaderProgram::load("3ddefault.vert", "3ddefault.frag");
+        lightProgram = ShaderProgram::load("light.vert", "light.frag");
         renderable.create();
         renderable.setVertices(&vertices[0], vertices.size(), gl::STATIC_DRAW);
         renderable.triangles = 36;
 
         Material material(glm::vec3(1, 1, 1));
-
+        material.specularity = 0.5f;
+        material.diffuse=1.0;
         material.create();
         material.update();
 
@@ -107,8 +109,8 @@ class TestApp : public karint::Application {
         controller.smooth = 0.70f;
         input::mouseCallback = controller.getMouseCallback();
 
-        environment.addAmbient(glm::vec3(0.8));
-        environment.setDiffuseLight(glm::vec3(1.5f, 2.0f, 2.0f), glm::vec3(1, 1, 1) * 1.2f);
+        environment.addAmbient(glm::vec3(0.3));
+        environment.setDiffuseLight(glm::vec3(0.0f, 2.0f, 2.0f), glm::vec3(1, 1, 1));
         renderer.setEnvironment(&environment);
     }
 
@@ -137,7 +139,9 @@ class TestApp : public karint::Application {
         camera.position.z += move.y;
 
         gl::enable(gl::DEPTH_TEST);
-        gl::clearScreen(135 / 255.0f, 206 / 255.0f, 235 / 255.0f, 1.0, gl::COLOR_BUFFER | gl::DEPTH_BUFFER);
+        glm::vec3 skyColor(135 / 255.0f, 206 / 255.0f, 235 / 255.0f);
+        skyColor*=0.15;
+        gl::clearScreen(skyColor.x, skyColor.y, skyColor.z, 1.0, gl::COLOR_BUFFER | gl::DEPTH_BUFFER);
 
         int width, height;
         karint::Window::getCurrent()->getSize(&width, &height);
@@ -147,6 +151,7 @@ class TestApp : public karint::Application {
         renderable.use();
         texture.bind(0);
 
+        renderer.setShader(program);
         renderer.use(&camera);
 
         for (int x = -1; x < 10; ++x) {
@@ -159,6 +164,11 @@ class TestApp : public karint::Application {
             renderable.model = glm::translate(glm::mat4(1.0f), glm::vec3(5, i, 5));
             renderer.draw(&renderable);
         }
+        renderable.model = glm::translate(glm::mat4(1),environment.diffuseLightPosition);
+
+        renderer.setShader(lightProgram);
+        renderer.use(&camera);
+        renderer.draw(&renderable);
     }
 
 public:

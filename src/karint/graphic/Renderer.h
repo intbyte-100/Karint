@@ -16,6 +16,7 @@ namespace karint {
         Uniform ambient;
         Uniform diffuseLightPosition;
         Uniform diffuseColor;
+        Uniform viewPosition;
 
     public:
         void setEnvironment(Environment* environment);

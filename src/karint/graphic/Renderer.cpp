@@ -6,7 +6,7 @@ void karint::Renderer::use(Camera *camera) {
     shaderProgram.use();
     projectionUniform.setMatrix(camera->projection, false);
     view.setMatrix(camera->view, false);
-
+    viewPosition.setVec3(&camera->position);
     if (environment)
         ambient.setFloat(environment->ambient.x, environment->ambient.y, environment->ambient.z, 1);
 }
@@ -17,8 +17,9 @@ void karint::Renderer::setShader(karint::ShaderProgram program) {
     model = shaderProgram.getUniform("model");
     view = shaderProgram.getUniform("view");
     ambient = shaderProgram.getUniform("ambient");
-    diffuseColor = shaderProgram.getUniform("diffuseColor");
-    diffuseLightPosition = shaderProgram.getUniform("diffusePosition");
+    diffuseColor = shaderProgram.getUniform("lightColor");
+    diffuseLightPosition = shaderProgram.getUniform("lightPosition");
+    viewPosition = shaderProgram.getUniform("viewPos");
     shaderProgram.uniformBlockBinding("Material", 0);
 }
 
