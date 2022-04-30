@@ -1,7 +1,7 @@
 
 # Karint Engine
 
-Karint Engine is a simple lightweight engine written using c++ and opengl
+Karint Engine is a simple lightweight game engine written using c++ and opengl
 ___
 
 <img src="./screenshots/1.png" width="300px"/>
