@@ -1,7 +1,7 @@
 #include <glm/trigonometric.hpp>
 #include <iostream>
 #include <glm/geometric.hpp>
-#include "math.h"
+#include "kmath.h"
 #include "cmath"
 
 float karint::math::middle(glm::vec3 vector) {

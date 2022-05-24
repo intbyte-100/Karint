@@ -36,8 +36,8 @@ set(ENGINE_SOURCE
         src/karint/graphic/Renderable.h
         src/karint/graphic/Renderer.cpp
         src/karint/graphic/Renderer.h
-        src/karint/math/math.cpp
-        src/karint/math/math.h
+        src/karint/math/kmath.cpp
+        src/karint/math/kmath.h
         src/karint/input/CameraController.cpp
         src/karint/input/CameraController.h
         src/karint/graphic/OrthographicCamera.cpp

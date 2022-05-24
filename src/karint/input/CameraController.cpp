@@ -1,7 +1,7 @@
 #include <glm/trigonometric.hpp>
 #include <iostream>
 #include "CameraController.h"
-#include "karint/math/math.h"
+#include "karint/math/kmath.h"
 
 float karint::CameraController::getYaw() const {
     return yaw;

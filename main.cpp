@@ -10,7 +10,7 @@
 #include "karint/input/input.h"
 #include "karint/graphic/Renderable.h"
 #include "karint/graphic/Renderer.h"
-#include "karint/math/math.h"
+#include "karint/math/kmath.h"
 #include "karint/input/CameraController.h"
 #include "karint/graphic/OrthographicCamera.h"
 #include "karint/graphic/g3d/Vertex.h"
@@ -180,7 +180,7 @@ public:
 int main() {
 
     karint::init();
-    karint::DesktopApplication(new TestApp, "karint engine", 80, 600, true).start();
+    karint::DesktopApplication(new TestApp, "karint engine", 1280, 720, true).start();
     karint::terminate();
     return 0;
 }
