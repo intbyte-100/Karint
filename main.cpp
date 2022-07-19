@@ -14,71 +14,28 @@
 #include "karint/input/CameraController.h"
 #include "karint/graphic/OrthographicCamera.h"
 #include "karint/graphic/g3d/Vertex.h"
+#include "vertices.h"
 
 using namespace karint;
 
-class TestApp : public karint::Application {
-    karint::ShaderProgram program;
-    karint::ShaderProgram lightProgram;
-    karint::Texture texture;
-    karint::PerspectiveCamera camera;
-    karint::Environment environment;
-    karint::Renderable renderable;
-    karint::Renderer renderer;
-    karint::CameraController controller;
+class TestApp : public Application {
+    ShaderProgram program;
+    ShaderProgram lightProgram;
+    Texture texture;
+    PerspectiveCamera camera;
+    Environment environment;
+    Renderable renderable;
+    Renderer renderer;
+    CameraController controller;
 
 
     void onCreate() override {
-        std::cout << karint::gl::getBackendInfo() << "\n";
-
-
-        std::vector<float> vertices{
-                -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f,
-                0.5f, -0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 1.0f, 0.0f,
-                0.5f, 0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 1.0f, 1.0f,
-                0.5f, 0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 1.0f, 1.0f,
-                -0.5f, 0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f,
-                -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f,
-
-                -0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-                0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f,
-                0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f,
-                0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f,
-                -0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f,
-                -0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-
-                -0.5f, 0.5f, 0.5f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
-                -0.5f, 0.5f, -0.5f, -1.0f, 0.0f, 0.0f, 1.0f, 1.0f,
-                -0.5f, -0.5f, -0.5f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f,
-                -0.5f, -0.5f, -0.5f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f,
-                -0.5f, -0.5f, 0.5f, -1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
-                -0.5f, 0.5f, 0.5f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
-
-                0.5f, 0.5f, 0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
-                0.5f, 0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f,
-                0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f,
-                0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f,
-                0.5f, -0.5f, 0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
-                0.5f, 0.5f, 0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
-
-                -0.5f, -0.5f, -0.5f, 0.0f, -1.0f, 0.0f, 0.0f, 1.0f,
-                0.5f, -0.5f, -0.5f, 0.0f, -1.0f, 0.0f, 1.0f, 1.0f,
-                0.5f, -0.5f, 0.5f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f,
-                0.5f, -0.5f, 0.5f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f,
-                -0.5f, -0.5f, 0.5f, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f,
-                -0.5f, -0.5f, -0.5f, 0.0f, -1.0f, 0.0f, 0.0f, 1.0f,
-
-                -0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-                0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
-                0.5f, 0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
-                0.5f, 0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
-                -0.5f, 0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
-                -0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f
-        };
+        std::cout << gl::getBackendInfo() << "\n";
 
 
         program = ShaderProgram::load("3ddefault.vert", "3ddefault.frag");
         lightProgram = ShaderProgram::load("light.vert", "light.frag");
+
         renderable.create();
         renderable.setVertices(&vertices[0], vertices.size(), gl::STATIC_DRAW);
         renderable.triangles = 36;
@@ -93,7 +50,7 @@ class TestApp : public karint::Application {
 
         texture = Texture::load("stone.jpeg");
 
-        karint::Vertex::enableDefaultVertexAttributes();
+        Vertex::enableDefaultVertexAttributes();
 
         program.use();
         program.getUniform("texture1").setInt(0);
@@ -102,8 +59,6 @@ class TestApp : public karint::Application {
         camera = PerspectiveCamera(100, 0.1f, 45);
         camera.position = glm::vec3(1.0f, 4.0f, 6.0f);
 
-
-        Window::getCurrent()->hideCursor(true);
 
         controller.setCamera(&camera);
         controller.smooth = 0.70f;
@@ -180,7 +135,7 @@ public:
 int main() {
 
     karint::init();
-    karint::DesktopApplication(new TestApp, "karint engine", 1280, 720, true).start();
+    karint::DesktopApplication(new TestApp, "karint engine", 1280, 720, false).start();
     karint::terminate();
     return 0;
 }

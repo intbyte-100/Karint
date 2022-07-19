@@ -37,6 +37,11 @@ namespace karint {
             attributeObject.use();
             bufferObject.create();
         }
+
+        void dispose() {
+            attributeObject.dispose();
+            bufferObject.dispose();
+        }
     };
 }
 
