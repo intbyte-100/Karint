@@ -15,6 +15,7 @@ void karint::init() {
 #ifdef KARINT_DEBUG
     karint::logger::debugMode = true;
 #endif
+    karint_debug_log("initialisation", "engine initialisation is started");
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);

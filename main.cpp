@@ -30,8 +30,6 @@ class TestApp : public Application {
 
 
     void onCreate() override {
-        std::cout << gl::getBackendInfo() << "\n";
-
 
         program = ShaderProgram::load("3ddefault.vert", "3ddefault.frag");
         lightProgram = ShaderProgram::load("light.vert", "light.frag");

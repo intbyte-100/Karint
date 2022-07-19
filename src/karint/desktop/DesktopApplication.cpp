@@ -7,7 +7,7 @@
 karint::DesktopApplication::DesktopApplication(Application *application, std::string title, int width, int height, bool fullscreen ) {
     window = new Window(title, width, height, fullscreen);
     this->application = application;
-    std::cout << "karint engine has been inited" << std::endl;
+    karint_debug_log("initialisation", "initialisation is finished");
 }
 
 karint::DesktopApplication::~DesktopApplication()

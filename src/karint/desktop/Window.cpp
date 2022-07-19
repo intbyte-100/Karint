@@ -79,6 +79,7 @@ void mouseCallback(GLFWwindow *window, double x, double y) {
 }
 
 karint::Window::Window(const std::string &title, int width, int height, bool fullscreen) {
+    karint_debug_log("Window", "window '" << title << "' is created");
     GLFWmonitor *monitor = nullptr;
     if (fullscreen) {
         monitor = glfwGetPrimaryMonitor();
@@ -96,10 +97,22 @@ karint::Window::Window(const std::string &title, int width, int height, bool ful
     glfwMakeContextCurrent(window);
 
 
+
     if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress)) {
         glfwTerminate();
         throw karint::KarintException("Failed to initialize GLAD");
     }
+    karint_debug_log("OpenGL", "glad is inited");
+
+    const GLubyte *renderer = glGetString(GL_RENDERER);
+    const GLubyte *vendor = glGetString(GL_VENDOR);
+    const GLubyte *version = glGetString(GL_VERSION);
+    const GLubyte *glslVersion = glGetString(GL_SHADING_LANGUAGE_VERSION);
+
+    karint_debug_log("OpenGL", "version: " << version);
+    karint_debug_log("OpenGL", "GLSL version: " << glslVersion);
+    karint_debug_log("OpenGL", "vendor: " << vendor);
+    karint_debug_log("OpenGL", "renderer: " << renderer);
 
     glfwSetFramebufferSizeCallback(window, framebufferSizeCallback);
     glfwSetCursorPosCallback(window, mouseCallback);
@@ -148,6 +161,7 @@ float karint::Window::getDeltaTime() const {
 
 void karint::Window::hideCursor(bool mode) {
     glfwSetInputMode(window, GLFW_CURSOR, mode ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL);
+    karint_debug_log("Window", "cursor.isHided = " << mode);
 }
 
 

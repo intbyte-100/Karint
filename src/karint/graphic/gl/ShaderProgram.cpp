@@ -76,10 +76,10 @@ void karint::ShaderProgram::use()
 
 karint::ShaderProgram karint::ShaderProgram::load(const std::string &vertex, const std::string &fragment)
 {
+    karint_debug_log("ShaderProgram", "creating a program with fragment '" << fragment << "' and vertex '" << vertex << "' shaders");
     std::string vertexSource = File::load(vertex).read();
     std::string fragmentSource = File::load(fragment).read();
 
-    karint_debug_log("ShaderProgram", "creating a program with fragment '" << fragment << "' and vertex '" << vertex << "' shaders");
     return ShaderProgram(vertexSource.c_str(), fragmentSource.c_str());
 }
 
