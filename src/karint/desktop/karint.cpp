@@ -1,4 +1,5 @@
 #include "karint.h"
+#include "karint/util/logger.h"
 #include <gtk/gtk.h>
 
 
@@ -11,6 +12,9 @@ void karint::update() {
 }
 
 void karint::init() {
+#ifdef KARINT_DEBUG
+    karint::logger::debugMode = true;
+#endif
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);

@@ -2,10 +2,14 @@
 #include "glad/glad.h"
 #include "karint/util/KarintException.h"
 #include "karint/util/File.h"
+#include "karint/util/logger.h"
+
 #include <string>
 
 karint::ShaderProgram::ShaderProgram(const char *vertex, const char *fragment)
 {
+
+
     unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertexShader, 1, &vertex, nullptr);
     glCompileShader(vertexShader);
@@ -22,6 +26,7 @@ karint::ShaderProgram::ShaderProgram(const char *vertex, const char *fragment)
         throw karint::KarintException(message);
     }
 
+
     unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
     glShaderSource(fragmentShader, 1, &fragment, nullptr);
     glCompileShader(fragmentShader);
@@ -32,6 +37,7 @@ karint::ShaderProgram::ShaderProgram(const char *vertex, const char *fragment)
         message.append(infoLog).append("\nshader source:\n").append(fragment);
         throw karint::KarintException(message);
     }
+
 
     shaderProgram = glCreateProgram();
     glAttachShader(shaderProgram, vertexShader);
@@ -48,6 +54,7 @@ karint::ShaderProgram::ShaderProgram(const char *vertex, const char *fragment)
 
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
+    karint_debug_log("ShaderProgram", "the program is created");
 }
 
 karint::Uniform karint::ShaderProgram::getUniform(const char *name)
@@ -72,6 +79,7 @@ karint::ShaderProgram karint::ShaderProgram::load(const std::string &vertex, con
     std::string vertexSource = File::load(vertex).read();
     std::string fragmentSource = File::load(fragment).read();
 
+    karint_debug_log("ShaderProgram", "creating a program with fragment '" << fragment << "' and vertex '" << vertex << "' shaders");
     return ShaderProgram(vertexSource.c_str(), fragmentSource.c_str());
 }
 

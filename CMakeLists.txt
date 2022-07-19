@@ -4,6 +4,7 @@ project(KarintEngine)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DKARINT_DEBUG")
 
 set(ENGINE_SOURCE
         src/karint/desktop/Window.cpp
