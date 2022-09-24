@@ -52,7 +52,20 @@ set(ENGINE_SOURCE
         src/karint/graphic/g3d/Vertex.cpp
         src/karint/graphic/g3d/Vertex.h
         src/karint/util/logger.cpp
-        src/karint/util/logger.h src/karint/graphic/g3d/Material.cpp src/karint/graphic/g3d/Material.h src/karint/graphic/gl/UniformBlockBuffer.cpp src/karint/graphic/gl/UniformBlockBuffer.h vertices.h)
+        src/karint/util/logger.h
+        src/karint/graphic/g3d/Material.cpp
+        src/karint/graphic/g3d/Material.h
+        src/karint/graphic/gl/UniformBlockBuffer.cpp
+        src/karint/graphic/gl/UniformBlockBuffer.h
+        vertices.h
+        src/karint/graphic/RenderingObject.h
+        src/karint/graphic/RenderingObject.cpp
+        src/karint/ecs/Entity.cpp
+        src/karint/ecs/Entity.h
+        src/karint/ecs/Component.cpp
+        src/karint/ecs/Component.h
+        src/karint/ecs/EcsHandler.cpp
+        src/karint/ecs/EcsHandler.h)
 
 
 

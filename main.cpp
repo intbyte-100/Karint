@@ -15,8 +15,32 @@
 #include "karint/graphic/OrthographicCamera.h"
 #include "karint/graphic/g3d/Vertex.h"
 #include "vertices.h"
+#include "karint/ecs/Component.h"
+#include "karint/ecs/EcsHandler.h"
+#include "karint/ecs/Entity.h"
 
 using namespace karint;
+
+
+class TestComponent : public karint::Component {
+    ECS_COMPONENT_HEADER
+    int x, y, z;
+};
+
+DEFINE_ECS_COMPONENT(TestComponent)
+
+
+void testComponent(){
+    karint::EcsHandler handler;
+    handler.registerComponent<TestComponent>();
+
+    karint::Entity entity;
+
+    auto component = new TestComponent();
+    component->x = 10;
+    entity.add(component);
+    std::cout << entity.get<TestComponent>()->x << std::endl;
+}
 
 class TestApp : public Application {
     ShaderProgram program;
@@ -65,6 +89,7 @@ class TestApp : public Application {
         environment.addAmbient(glm::vec3(0.3));
         environment.setDiffuseLight(glm::vec3(0.0f, 2.0f, 2.0f), glm::vec3(1, 1, 1));
         renderer.setEnvironment(&environment);
+        Window::getCurrent()->hideCursor(true);
     }
 
     void render() override {
@@ -132,8 +157,10 @@ public:
 
 int main() {
 
+    testComponent();
     karint::init();
     karint::DesktopApplication(new TestApp, "karint engine", 1280, 720, false).start();
     karint::terminate();
+
     return 0;
 }
