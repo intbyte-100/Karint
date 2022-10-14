@@ -5,14 +5,14 @@
 #include "Camera.h"
 
 namespace karint {
-    class PerspectiveCamera: public Camera{
+    class Camera3D: public Camera{
     private:
         float near;
         float far;
         float viewAngle;
     public:
-        PerspectiveCamera() = default;
-        PerspectiveCamera(float far, float near, float viewAngle);
+        Camera3D() = default;
+        Camera3D(float far, float near, float viewAngle);
         void update(int width, int height);
     };
 }

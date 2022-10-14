@@ -39,9 +39,10 @@ namespace karint {
     constexpr uint64_t PERSPECTIVE_PROJECTION_UNIT = renderUnitIdBits(1);
     constexpr uint64_t COLOR_UNIT = renderUnitIdBits(2);
     constexpr uint64_t AMBIENT_LIGHT_UNIT = renderUnitIdBits(3);
-    constexpr uint64_t DIRECTION_LIGHTS_UNIT = renderUnitIdBits(4);
-    constexpr uint64_t POINT_LIGHTS_UNIT = renderUnitIdBits(5);
-    constexpr uint64_t SHADOW_MAP_UNIT = renderUnitIdBits(6);
+    constexpr uint64_t DIFFUSE_LIGHT_UNIT = renderUnitIdBits(3);
+    constexpr uint64_t DIRECTION_LIGHTS_UNIT = renderUnitIdBits(5);
+    constexpr uint64_t POINT_LIGHTS_UNIT = renderUnitIdBits(6);
+    constexpr uint64_t SHADOW_MAP_UNIT = renderUnitIdBits(8);
 
     class RenderUnit {
     public:

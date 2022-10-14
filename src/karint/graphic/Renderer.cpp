@@ -6,7 +6,7 @@ void karint::Renderer::use(Camera *camera) {
     shaderProgram.use();
     projectionUniform.setMatrix(camera->projection, false);
     view.setMatrix(camera->view, false);
-    viewPosition.setVec3(&camera->position);
+    viewPosition.setVec3(camera->position);
     if (environment)
         ambient.setFloat(environment->ambient.x, environment->ambient.y, environment->ambient.z, 1);
 }
@@ -24,8 +24,8 @@ void karint::Renderer::setShader(karint::ShaderProgram program) {
 }
 
 void karint::Renderer::draw(karint::Renderable *renderable) {
-    diffuseColor.setVec3(&environment->diffuseColor);
-    diffuseLightPosition.setVec3(&environment->diffuseLightPosition);
+    diffuseColor.setVec3(environment->diffuseColor);
+    diffuseLightPosition.setVec3(environment->diffuseLightPosition);
     model.setMatrix(renderable->model, false);
     renderable->use();
     gl::drawArrays(gl::TRIANGLE, 0, renderable->triangles);

@@ -6,13 +6,13 @@
 #include "karint/graphic/gl/VertexAttributeObject.h"
 #include <iostream>
 #include "karint/graphic/gl/gl.h"
-#include "karint/graphic/PerspectiveCamera.h"
+#include "karint/graphic/Camera3D.h"
 #include "karint/input/input.h"
 #include "karint/graphic/Renderable.h"
 #include "karint/graphic/Renderer.h"
 #include "karint/math/kmath.h"
 #include "karint/input/CameraController.h"
-#include "karint/graphic/OrthographicCamera.h"
+#include "karint/graphic/Camera2D.h"
 #include "karint/graphic/g3d/Vertex.h"
 #include "vertices.h"
 #include "karint/ecs/Component.h"
@@ -46,7 +46,7 @@ class TestApp : public Application {
     ShaderProgram program;
     ShaderProgram lightProgram;
     Texture texture;
-    PerspectiveCamera camera;
+    Camera3D camera;
     Environment environment;
     Renderable renderable;
     Renderer renderer;
@@ -78,7 +78,7 @@ class TestApp : public Application {
         program.getUniform("texture1").setInt(0);
         renderer.setShader(program);
 
-        camera = PerspectiveCamera(100, 0.1f, 45);
+        camera = Camera3D(100, 0.1f, 45);
         camera.position = glm::vec3(1.0f, 4.0f, 6.0f);
 
 

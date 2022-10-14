@@ -3,7 +3,7 @@
 
 void karint::ColorUnit::update(bool force) {
     if (force) {
-        uniform.setVec3(&color);
+        uniform.setVec3(color);
     }
 }
 

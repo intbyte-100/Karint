@@ -35,8 +35,8 @@ set(ENGINE_SOURCE
         src/karint/graphic/gl/Texture.h
         src/karint/graphic/gl/Texture.cpp
         src/karint/util/FileException.h
-        src/karint/graphic/PerspectiveCamera.cpp
-        src/karint/graphic/PerspectiveCamera.h
+        src/karint/graphic/Camera3D.cpp
+        src/karint/graphic/Camera3D.h
         src/karint/input/input.cpp
         src/karint/input/input.h
         src/karint/graphic/Renderable.h
@@ -46,8 +46,8 @@ set(ENGINE_SOURCE
         src/karint/math/kmath.h
         src/karint/input/CameraController.cpp
         src/karint/input/CameraController.h
-        src/karint/graphic/OrthographicCamera.cpp
-        src/karint/graphic/OrthographicCamera.h
+        src/karint/graphic/Camera2D.cpp
+        src/karint/graphic/Camera2D.h
         src/karint/graphic/Camera.cpp
         src/karint/graphic/Camera.h
         src/karint/graphic/g3d/Environment.cpp
@@ -74,7 +74,7 @@ set(ENGINE_SOURCE
         src/karint/graphic/pipeline/RenderUnit.cpp
         src/karint/graphic/pipeline/RenderUnit.h
         src/karint/graphic/pipeline/units/ColorUnit.cpp
-        src/karint/graphic/pipeline/units/ColorUnit.h)
+        src/karint/graphic/pipeline/units/ColorUnit.h src/karint/graphic/pipeline/units/CameraUnit.cpp src/karint/graphic/pipeline/units/CameraUnit.h src/karint/graphic/pipeline/units/AmbientUnit.cpp src/karint/graphic/pipeline/units/AmbientUnit.h src/karint/graphic/pipeline/units/DiffuseLightUnit.cpp src/karint/graphic/pipeline/units/DiffuseLightUnit.h)
 
 
 
