@@ -159,7 +159,7 @@ int main() {
 
     testComponent();
     karint::init();
-    karint::DesktopApplication(new TestApp, "karint engine", 1280, 720, false).start();
+    karint::DesktopApplication(new TestApp, "karint engine", 1280, 720, true).start();
     karint::terminate();
 
     return 0;

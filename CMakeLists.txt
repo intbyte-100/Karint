@@ -1,10 +1,15 @@
 cmake_minimum_required(VERSION 2.19)
 project(KarintEngine)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DKARINT_DEBUG")
+
+
+
+
+
 
 set(ENGINE_SOURCE
         src/karint/desktop/Window.cpp
@@ -58,14 +63,18 @@ set(ENGINE_SOURCE
         src/karint/graphic/gl/UniformBlockBuffer.cpp
         src/karint/graphic/gl/UniformBlockBuffer.h
         vertices.h
-        src/karint/graphic/RenderingObject.h
-        src/karint/graphic/RenderingObject.cpp
         src/karint/ecs/Entity.cpp
         src/karint/ecs/Entity.h
         src/karint/ecs/Component.cpp
         src/karint/ecs/Component.h
         src/karint/ecs/EcsHandler.cpp
-        src/karint/ecs/EcsHandler.h)
+        src/karint/ecs/EcsHandler.h
+        src/karint/graphic/pipeline/RenderPipeline.cpp
+        src/karint/graphic/pipeline/RenderPipeline.h
+        src/karint/graphic/pipeline/RenderUnit.cpp
+        src/karint/graphic/pipeline/RenderUnit.h
+        src/karint/graphic/pipeline/units/ColorUnit.cpp
+        src/karint/graphic/pipeline/units/ColorUnit.h)
 
 
 

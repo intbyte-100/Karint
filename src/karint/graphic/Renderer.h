@@ -7,7 +7,7 @@
 
 namespace karint {
     class Renderer {
-    private:
+    public:
         Environment *environment = nullptr;
         ShaderProgram shaderProgram;
         Uniform projectionUniform;
