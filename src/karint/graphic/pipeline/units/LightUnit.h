@@ -4,9 +4,15 @@
 
 
 namespace karint {
-    class DiffuseLightUnit : public RenderUnit{
+    class LightUnit : public RenderUnit{
     private:
+        Uniform positionUniform;
+        Uniform directionUniform;
+        Uniform colorUniform;
     public:
+        glm::vec3 position;
+        glm::vec3 direction;
+        glm::vec3 color;
         void update(bool force) override;
         void init(ShaderProgram program) override;
         uint64_t unitBits() override;

@@ -32,9 +32,11 @@ DEFINE_ECS_COMPONENT(TestComponent)
 
 void testComponent(){
     karint::EcsHandler handler;
+
     handler.registerComponent<TestComponent>();
 
     karint::Entity entity;
+
 
     auto component = new TestComponent();
     component->x = 10;
@@ -159,7 +161,7 @@ int main() {
 
     testComponent();
     karint::init();
-    karint::DesktopApplication(new TestApp, "karint engine", 1280, 720, true).start();
+    karint::DesktopApplication(new TestApp, "karint engine", 1280, 720, false).start();
     karint::terminate();
 
     return 0;
