@@ -1,14 +1,12 @@
 #include "ColorUnit.h"
+#include "karint/graphic/pipeline/RenderPipeline.h"
 
-
-void karint::ColorUnit::update(bool force) {
-    if (force) {
-        uniform.setVec3(color);
-    }
+void karint::ColorUnit::update() {
+    uniform.setVec3(color);
 }
 
-void karint::ColorUnit::init(karint::ShaderProgram program) {
-    uniform = program.getUniform("color");
+void karint::ColorUnit::init(RenderPipeline *pipeline) {
+    uniform = pipeline->shaderProgram.getUniform("u_color");
 }
 
 uint64_t karint::ColorUnit::unitBits() {

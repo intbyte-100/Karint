@@ -74,7 +74,7 @@ set(ENGINE_SOURCE
         src/karint/graphic/pipeline/RenderUnit.cpp
         src/karint/graphic/pipeline/RenderUnit.h
         src/karint/graphic/pipeline/units/ColorUnit.cpp
-        src/karint/graphic/pipeline/units/ColorUnit.h src/karint/graphic/pipeline/units/CameraUnit.cpp src/karint/graphic/pipeline/units/CameraUnit.h src/karint/graphic/pipeline/units/AmbientUnit.cpp src/karint/graphic/pipeline/units/AmbientUnit.h src/karint/graphic/pipeline/units/LightUnit.cpp src/karint/graphic/pipeline/units/LightUnit.h)
+        src/karint/graphic/pipeline/units/ColorUnit.h src/karint/graphic/pipeline/units/CameraUnit.cpp src/karint/graphic/pipeline/units/CameraUnit.h src/karint/graphic/pipeline/units/AmbientLightUnit.cpp src/karint/graphic/pipeline/units/AmbientLightUnit.h src/karint/graphic/pipeline/units/LightUnit.cpp src/karint/graphic/pipeline/units/LightUnit.h src/karint/graphic/pipeline/units/MaterialUnit.cpp src/karint/graphic/pipeline/units/MaterialUnit.h src/karint/graphic/g3d/ModelRender.cpp src/karint/graphic/g3d/ModelRender.h)
 
 
 

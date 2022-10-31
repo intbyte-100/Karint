@@ -59,9 +59,7 @@ karint::ShaderProgram::ShaderProgram(const char *vertex, const char *fragment)
 
 karint::Uniform karint::ShaderProgram::getUniform(const char *name)
 {
-    Uniform uniform;
-    uniform.id = glGetUniformLocation(shaderProgram, name);
-    return uniform;
+    return Uniform(glGetUniformLocation(shaderProgram, name));
 }
 
 void karint::ShaderProgram::dispose()
@@ -80,7 +78,7 @@ karint::ShaderProgram karint::ShaderProgram::load(const std::string &vertex, con
     std::string vertexSource = File::load(vertex).read();
     std::string fragmentSource = File::load(fragment).read();
 
-    return ShaderProgram(vertexSource.c_str(), fragmentSource.c_str());
+    return {vertexSource.c_str(), fragmentSource.c_str()};
 }
 
 

@@ -1,10 +1,10 @@
 #include "LightUnit.h"
 
-void karint::LightUnit::update(bool force) {
+void karint::LightUnit::update() {
 
 }
 
-void karint::LightUnit::init(karint::ShaderProgram program) {
+void karint::LightUnit::init(RenderPipeline *pipeline) {
 
 }
 

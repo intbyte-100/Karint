@@ -41,3 +41,7 @@ void karint::Uniform::setMatrix(glm::mat4 &matrix, bool transpose)
 void karint::Uniform::setVec3(glm::vec3 &vector) {
     glUniform3f(id, vector.x, vector.y, vector.z);
 }
+
+karint::Uniform::Uniform(int id) {
+    this->id = id;
+}

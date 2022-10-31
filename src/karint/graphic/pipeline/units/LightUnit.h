@@ -13,8 +13,8 @@ namespace karint {
         glm::vec3 position;
         glm::vec3 direction;
         glm::vec3 color;
-        void update(bool force) override;
-        void init(ShaderProgram program) override;
+        void update() override;
+        void init(RenderPipeline *pipeline) override;
         uint64_t unitBits() override;
     };
 }

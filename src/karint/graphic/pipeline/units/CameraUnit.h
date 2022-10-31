@@ -13,11 +13,11 @@ namespace karint {
 
     public:
         uint64_t projectionType = 0;
-        explicit CameraUnit(Camera3D *camera3D);
+        explicit CameraUnit(Camera *camera);
         CameraUnit() = default;
-        Camera3D *camera;
-        void update(bool force) override;
-        void init(ShaderProgram program) override;
+        Camera *camera;
+        void update() override;
+        void init(RenderPipeline *pipeline) override;
         uint64_t unitBits() override;
     };
 }

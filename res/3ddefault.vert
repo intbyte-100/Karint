@@ -27,6 +27,6 @@ void main()
         vec3 lightDir = normalize(lightPosition - fragPosition);
 
         diffuse = vec4(lightColor * max(dot(lightDir, normal), 0.0), 1.0);
-        TexCoord = vec2(aTexCoord.x, aTexCoord.y);
+        TexCoord = aTexCoord;
         gl_Position = projection * view * vertex;
 }

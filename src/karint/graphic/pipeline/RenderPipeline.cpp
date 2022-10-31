@@ -14,12 +14,28 @@ void karint::RenderPipeline::add(karint::RenderUnit *unit) {
     unitsMask = unitsMask | (uint32_t) mask;
     unitsLocationBits = unitsLocationBits | units.size() << 4 * renderUnitIntId(unitBits);
 
-    unit->init(shaderProgram);
+    unit->init(this);
 
     units.push_back(unit);
 }
 
 void karint::RenderPipeline::update() {
+    shaderProgram.use();
+
     for (auto unit: units)
-        unit->update(false);
+        if (unit->forceUpdate)
+            unit->update();
+}
+
+void karint::RenderPipeline::setShaderProgram(karint::ShaderProgram program) {
+    this->shaderProgram = program;
+    uniformBlockId = 0;
+
+    for (auto unit: units) {
+        unit->init(this);
+    }
+}
+
+int karint::RenderPipeline::registerUniformBlockId() {
+    return uniformBlockId++;
 }

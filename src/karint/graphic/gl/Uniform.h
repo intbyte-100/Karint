@@ -6,7 +6,8 @@ namespace karint {
     {
     public:
         int id;
-
+        Uniform() = default;
+        explicit Uniform(int id);
         void setFloat(float r, float g, float b, float a);
         void setFloat(float r, float g, float b);
         void setFloat(float x, float y);

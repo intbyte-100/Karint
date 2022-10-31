@@ -18,6 +18,11 @@
 #include "karint/ecs/Component.h"
 #include "karint/ecs/EcsHandler.h"
 #include "karint/ecs/Entity.h"
+#include "karint/graphic/pipeline/RenderPipeline.h"
+#include "karint/graphic/pipeline/units/AmbientLightUnit.h"
+#include "karint/graphic/pipeline/units/CameraUnit.h"
+#include "karint/graphic/pipeline/units/MaterialUnit.h"
+#include "karint/graphic/pipeline/units/LightUnit.h"
 
 using namespace karint;
 
@@ -94,6 +99,20 @@ class TestApp : public Application {
         Window::getCurrent()->hideCursor(true);
     }
 
+    void createPipeline(){
+        ShaderProgram shader = ShaderProgram::load("shaders/3d/default.vert", "shaders/3d/default.frag");
+        RenderPipeline pipeline;
+
+
+        pipeline.setShaderProgram(shader);
+        pipeline.add(new AmbientLightUnit());
+        pipeline.add(new CameraUnit(&camera));
+        pipeline.add(new MaterialUnit());
+        pipeline.add(new LightUnit());
+
+        pipeline.update();
+
+    }
     void render() override {
 
         controller.update();

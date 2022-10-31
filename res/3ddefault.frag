@@ -24,7 +24,7 @@ void main()
     vec3 viewDir = normalize(viewPos - fragPosition);
     vec3 lightDir = normalize(lightPosition - fragPosition);
     vec3 reflectDir = reflect(-lightDir, normal);
-    float spec = pow(max(dot(viewDir, reflectDir), 0.0), 128);
+    float spec = pow(max(dot(viewDir, reflectDir), 0.0), 64);
 
     vec3 specular = material.specularity * spec * lightColor;
 
